@@ -17,6 +17,7 @@ import static android.graphics.Paint.ANTI_ALIAS_FLAG;
 /**
  * 倒计时控件
  * 思想：定时刷新视图
+ * 参考：https://blog.csdn.net/qq_17387361/article/details/53609301
  * @date 2019.2.15
  * @author czq
  */
@@ -100,11 +101,12 @@ public class CircleProgressbar extends View {
         canvas.drawCircle(rect.centerX(), rect.centerY(), radius - ringWidth, circleSolidPaint);
 
         //绘制文字
-        textPaint.setAntiAlias(true);   //设置抗锯齿
-        textPaint.setTextAlign(Paint.Align.CENTER); //设置在中心绘制
-        textPaint.setColor(textColor);  //设置颜色
-        textPaint.setStyle(Paint.Style.STROKE);
-        textPaint.setStrokeWidth(textWidth);    //设置宽度
+        textPaint.setTextSize(textWidth);    //设置宽度
+        textPaint.setColor(textColor);    //设置颜色
+        textPaint.setAntiAlias(true);     //设置抗锯齿
+        textPaint.setTextAlign(Paint.Align.CENTER);   //设置文字居中
+        textPaint.setTextSize(textWidth); //设置文字大小
+        //设置文字基线位置，可参考：https://www.jianshu.com/p/c3c9aea4cb01
         canvas.drawText(TEXT, rect.centerX(), rect.centerY() - (textPaint.descent() + textPaint.ascent()) / 2, textPaint);
 
         //绘制进度条
