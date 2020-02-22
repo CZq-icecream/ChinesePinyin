@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_learn_fragment"
+        android:icon="@drawable/ic_learn"
+        android:title="@string/nav_bottom_main_learn"/>
+
+    <item
+        android:id="@+id/navigation_discovery_fragment"
+        android:icon="@drawable/ic_discovery"
+        android:title="@string/nav_bottom_main_discovery"/>
+
+    <item
+        android:id="@+id/navigation_immerse_fragment"
+        android:icon="@drawable/ic_immerse"
+        android:title="@string/nav_bottom_main_immerse"/>
+
+    <item
+        android:id="@+id/navigation_user_fragment"
+        android:icon="@drawable/ic_user"
+        android:title="@string/nav_bottom_main_user"/>
+
+</menu>

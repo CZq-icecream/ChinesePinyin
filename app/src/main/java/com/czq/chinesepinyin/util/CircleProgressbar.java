@@ -1,4 +1,4 @@
-package com.czq.chinesepinyin;
+package com.czq.chinesepinyin.util;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -11,6 +11,8 @@ import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.Nullable;
+
+import com.czq.chinesepinyin.R;
 
 import static android.graphics.Paint.ANTI_ALIAS_FLAG;
 
@@ -80,7 +82,7 @@ public class CircleProgressbar extends View {
         int height = getMeasuredHeight();
         radius = Math.min(width, height) / 2;   //半径设置为较小的那个
         ringWidth = (int)((double)radius * 0.1);    //圆环的宽度设置为半径的1/10
-        textWidth = ringWidth;  //设置字体宽度和圆环宽度相等
+        textWidth = radius / 2;  //设置字体宽度
 
         //某些情况下会在xml中写wrap_content或者match_parent
         //所以我们需要自己去设置尺寸
@@ -152,4 +154,8 @@ public class CircleProgressbar extends View {
             }
         }
     };
+
+    public void setOnProgressListener(OnProgressListener onProgressListener) {
+        this.onProgressListener = onProgressListener;
+    }
 }

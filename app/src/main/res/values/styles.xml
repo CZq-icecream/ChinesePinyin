@@ -8,4 +8,10 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+<!--    自定义主题，主要是为了去掉标题栏-->
+    <style name="MyTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="windowNoTitle">true</item>  //去掉Title
+    </style>
+
+
 </resources>

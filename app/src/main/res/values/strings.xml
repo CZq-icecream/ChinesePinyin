@@ -1,3 +1,17 @@
 <resources>
     <string name="app_name">ChinesePinyin</string>
+
+    <string name="nav_bottom_main_learn">Learn</string>
+    <string name="nav_bottom_main_discovery">Discovery</string>
+    <string name="nav_bottom_main_immerse">Immerse</string>
+    <string name="nav_bottom_main_user">User</string>
+
+<!--    LearningFragment上的字符资源-->
+    <string name="learning">Total Learning:%d Days</string>
+    <string name="goal">Daily Goal</string>
+    <string name="new_xp">%d XP</string>
+    <string name="review_xp">%d XP</string>
+    <string name="practice">Practice</string>
+
+
 </resources>
