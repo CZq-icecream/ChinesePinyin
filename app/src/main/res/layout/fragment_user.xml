@@ -1,21 +1,174 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    >
 
-    <TextView
-        android:text="I am user"
+    <TableLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        >
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_gravity="center"
+            android:layout_weight="1">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                >
+
+                <ImageView
+                    android:id="@+id/user_profile"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:scaleType="center"
+                    android:src="@drawable/ic_user" />
+
+            </RelativeLayout>
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_gravity="center"
+            android:layout_weight="1">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:text="14\nDays Learning"
+                android:textAlignment="center"
+                tools:text="14\nDays Learning" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:text="222XP\nTotal XP"
+                android:textAlignment="center"
+                tools:text="222XP\nTotal XP" />
+
+        </TableRow>
+
+    </TableLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        android:scrollbars="none"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            style="@style/UserFrame"
+            >
+
+    <!--        每日目标设置-->
+            <LinearLayout
+                android:id="@+id/daily_goal_setting"
+                style="@style/SettingListLayout"
+                >
+                <TextView
+                    style="@style/UserSettingText"
+                    android:text="@string/user_fragment_daily_goal"
+                    tools:text="daily goal"
+                    />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/ic_arrow_right"/>
+            </LinearLayout>
+            <View style="@style/Separator"/>
+
+    <!--        课程变更设置-->
+            <LinearLayout
+                android:id="@+id/lesson_setting"
+                style="@style/SettingListLayout"
+                >
+                <TextView
+                    style="@style/UserSettingText"
+                    android:text="@string/user_fragment_lesson"
+                    tools:text="lesson"
+                    />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/ic_arrow_right"/>
+            </LinearLayout>
+            <View style="@style/Separator"/>
+
+    <!--        提醒时间设置-->
+            <LinearLayout
+                android:id="@+id/reminder_setting"
+                style="@style/SettingListLayout">
+                <TextView
+                    style="@style/UserSettingText"
+                    android:text="@string/user_fragment_reminder"
+                    tools:text="Reminder"
+                    />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/ic_arrow_right"/>
+            </LinearLayout>
+            <View style="@style/Separator"/>
+
+    <!--        历史课程查询-->
+            <LinearLayout
+                android:id="@+id/history_lesson"
+                style="@style/SettingListLayout">
+                <TextView
+                    style="@style/UserSettingText"
+                    android:text="@string/user_fragment_history_lesson"
+                    tools:text="History Lesson"/>
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/ic_arrow_right"/>
+            </LinearLayout>
+            <View style="@style/Separator"/>
+
+            <LinearLayout
+                android:id="@+id/password_change"
+                style="@style/SettingListLayout">
+                <TextView
+                    style="@style/UserSettingText"
+                    android:text="@string/user_fragment_change_password"
+                    tools:text="Password"/>
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/ic_arrow_right"/>
+            </LinearLayout>
+            <View style="@style/Separator"/>
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <Button
+        android:layout_gravity="center_horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/red"
+        android:text="@string/user_fragment_log_out"/>
+
+</LinearLayout>

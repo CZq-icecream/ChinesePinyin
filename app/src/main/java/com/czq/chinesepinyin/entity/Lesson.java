@@ -19,17 +19,17 @@ public class Lesson {
     @ColumnInfo(name = "id")
     private Integer id;
     /**
-     * 标题
+     * 课程标题
      */
     @ColumnInfo(name = "title")
     private String title;
     /**
-     * 描述
+     * 课程描述
      */
     @ColumnInfo(name = "description")
     private String description;
     /**
      * 通过学习该课程新获得的xp
      */
-    private Integer totalXp;
+    private Integer totalXP;
 }

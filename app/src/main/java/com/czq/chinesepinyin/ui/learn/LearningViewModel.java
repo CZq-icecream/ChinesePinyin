@@ -1,15 +1,15 @@
 package com.czq.chinesepinyin.ui.learn;
 
 import android.app.Application;
+import android.util.Log;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
 
-import com.czq.chinesepinyin.ConstantForTest;
-import com.czq.chinesepinyin.entity.DailyGoal;
-import com.czq.chinesepinyin.repository.DailyGoalRepository;
+import com.czq.chinesepinyin.database.UserDatabase;
+import com.czq.chinesepinyin.repository.UserRepository;
 
 /**
  * @date 2020.2.21
@@ -17,20 +17,30 @@ import com.czq.chinesepinyin.repository.DailyGoalRepository;
  */
 public class LearningViewModel extends AndroidViewModel {
 
-    private MutableLiveData<DailyGoal> dailyGoalMutableLiveData = new MutableLiveData<>();
-    private DailyGoalRepository dailyGoalRepository;
+    private LiveData<Integer> learningDay;
+    private LiveData<Integer> newXP;
+    private LiveData<Integer> reviewXP;
+    private LiveData<Integer> gainToday;
 
-    /**
-     * @param application
-     * @param id
-     */
-    public LearningViewModel(Application application, Integer id){
+    public LearningViewModel(@NonNull Application application) {
         super(application);
-        dailyGoalRepository = new DailyGoalRepository(application);
-        dailyGoalRepository.selectDailyGoal(id, dailyGoalMutableLiveData);
+        UserRepository userRepository = new UserRepository(application);
+        learningDay = userRepository.selectLearningDay();
+        newXP = userRepository.selectNewXP();
+        reviewXP = userRepository.selectReviewXP();
+        gainToday = userRepository.selectGainToday();
     }
 
-    public MutableLiveData<DailyGoal> getDailyGoalMutableLiveData(){
-        return dailyGoalMutableLiveData;
+    public LiveData<Integer> getLearningDay(){
+        return learningDay;
+    }
+    public LiveData<Integer> getNewXP(){
+        return newXP;
+    }
+    public LiveData<Integer> getReviewXP(){
+        return reviewXP;
+    }
+    public LiveData<Integer> getGainToday(){
+        return gainToday;
     }
 }
