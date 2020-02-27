@@ -23,4 +23,7 @@
     <string name="user_fragment_change_password">Password</string>
     <string name="user_fragment_log_out">Log Out</string>
 
+<!--    DetailFragment界面的字符串-->
+    <string name="detail_fragment_next">Next</string>
+
 </resources>

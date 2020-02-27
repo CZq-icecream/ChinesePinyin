@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import com.czq.chinesepinyin.ui.main.MainActivity;
 import com.czq.chinesepinyin.util.CircleProgressbar;
 
 /**

@@ -8,22 +8,22 @@
 
     <fragment
         android:id="@+id/navigation_learn_fragment"
-        android:name="com.czq.chinesepinyin.ui.learn.LearningFragment"
+        android:name="com.czq.chinesepinyin.ui.main.learn.LearningFragment"
         tools:layout="@layout/fragment_learn"/>
 
     <fragment
         android:id="@+id/navigation_discovery_fragment"
-        android:name="com.czq.chinesepinyin.ui.discovery.DiscoveryFragment"
+        android:name="com.czq.chinesepinyin.ui.main.discovery.DiscoveryFragment"
         tools:layout="@layout/fragment_discovery"/>
 
     <fragment
         android:id="@+id/navigation_immerse_fragment"
-        android:name="com.czq.chinesepinyin.ui.immerse.ImmerseFragment"
+        android:name="com.czq.chinesepinyin.ui.main.immerse.ImmerseFragment"
         tools:layout="@layout/fragment_immerse"/>
 
     <fragment
         android:id="@+id/navigation_user_fragment"
-        android:name="com.czq.chinesepinyin.ui.user.UserFragment"
+        android:name="com.czq.chinesepinyin.ui.main.user.UserFragment"
         tools:layout="@layout/fragment_user"/>
 
 </navigation>

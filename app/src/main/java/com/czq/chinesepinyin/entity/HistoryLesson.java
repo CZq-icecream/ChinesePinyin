@@ -1,5 +1,9 @@
 package com.czq.chinesepinyin.entity;
 
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 import java.util.List;
 
 /**
@@ -7,9 +11,20 @@ import java.util.List;
  * @date 2020.2.22
  * @author czq
  */
+@Entity(tableName = "history_lesson")
 public class HistoryLesson {
 
-    private Integer id;
+    /**
+     * 主键，代表课程id
+     */
+    @PrimaryKey
+    @ColumnInfo(name = "lesson_id")
     private Integer lessonId;
-    private Integer getXP;
+    /**
+     * 代表学习了该课程的进度
+     */
+    @ColumnInfo(name = "progress")
+    private Integer progress;
+
+
 }

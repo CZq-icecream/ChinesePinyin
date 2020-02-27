@@ -57,5 +57,13 @@
     <style name="SettingListLayout" parent="BaseLayout">
         <item name="android:background">@drawable/background_change</item>
     </style>
-
+    
+<!--    OptionFragment页面按钮的样式-->
+    <style name="ImageButtonLayout">
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+    </style>
+    
 </resources>

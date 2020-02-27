@@ -1,6 +1,7 @@
 package com.czq.chinesepinyin.repository;
 
 import android.app.Application;
+import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -14,6 +15,8 @@ import com.czq.chinesepinyin.database.UserDatabase;
  * @author czq
  */
 public class UserRepository {
+
+    private static final String TAG = "UserRepository";
 
     private UserDao userDao;
 
