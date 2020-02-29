@@ -2,6 +2,7 @@ package com.czq.chinesepinyin.ui.main.learn;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -25,6 +27,8 @@ import com.czq.chinesepinyin.ui.study.StudyActivity;
  * @author czq
  */
 public class LearningFragment extends Fragment {
+
+    private static final String TAG = "LearningFragment";
 
     @Nullable
     @Override
@@ -43,6 +47,21 @@ public class LearningFragment extends Fragment {
             }
         });
 
+        learningViewModel.liveData.observe(this, new Observer<Integer>() {
+            @Override
+            public void onChanged(Integer integer) {
+                TextView textView = view.findViewById(R.id.text);
+                textView.setText("" + learningViewModel.liveData.getValue());
+            }
+        });
+        Button button = view.findViewById(R.id.button);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Integer i = learningViewModel.liveData.getValue();
+                learningViewModel.liveData = new MutableLiveData<>(i + 1);
+            }
+        });
 
 
         return view;

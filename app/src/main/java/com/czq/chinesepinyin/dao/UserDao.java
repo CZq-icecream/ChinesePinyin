@@ -63,4 +63,11 @@ public interface UserDao {
      */
     @Query("DELETE FROM user")
     void deleteAll();
+
+    /**
+     * 获得用户信息
+     * @return
+     */
+    @Query("SELECT * FROM user LIMIT 1")
+    User selectUser();
 }

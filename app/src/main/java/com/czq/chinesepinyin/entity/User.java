@@ -64,8 +64,24 @@ public class User {
     /**
      * 用户当前学习的课程id
      */
-    @ColumnInfo(name = "current_lesson_id")
+    @ColumnInfo(name = "current_lesson_id", defaultValue = "1")
     private Integer currentLessonId;
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", learningDays=" + learningDays +
+                ", dailyGoal=" + dailyGoal +
+                ", dailyNew=" + dailyNew +
+                ", dailyReview=" + dailyReview +
+                ", gainToday=" + gainToday +
+                ", totalXP=" + totalXP +
+                ", currentLessonId=" + currentLessonId +
+                '}';
+    }
 
     public User(String username, String password, Integer learningDays, Integer dailyGoal, Integer dailyNew, Integer dailyReview, Integer gainToday, Integer totalXP, Integer currentLessonId) {
         this.username = username;

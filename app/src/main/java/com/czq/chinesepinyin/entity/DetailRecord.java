@@ -19,4 +19,51 @@ public class DetailRecord {
 //    private MediaPlayer mediaPlayer;    //暂定为视频解释
 
 
+    public DetailRecord(Integer lessonId, Bitmap chinese, SoundPool soundPool, Bitmap illustration, Bitmap chineseMeaning) {
+        this.lessonId = lessonId;
+        this.chinese = chinese;
+        this.soundPool = soundPool;
+        this.illustration = illustration;
+        this.chineseMeaning = chineseMeaning;
+    }
+
+    public Integer getLessonId() {
+        return lessonId;
+    }
+
+    public void setLessonId(Integer lessonId) {
+        this.lessonId = lessonId;
+    }
+
+    public Bitmap getChinese() {
+        return chinese;
+    }
+
+    public void setChinese(Bitmap chinese) {
+        this.chinese = chinese;
+    }
+
+    public SoundPool getSoundPool() {
+        return soundPool;
+    }
+
+    public void setSoundPool(SoundPool soundPool) {
+        this.soundPool = soundPool;
+    }
+
+    public Bitmap getIllustration() {
+        return illustration;
+    }
+
+    public void setIllustration(Bitmap illustration) {
+        this.illustration = illustration;
+    }
+
+    public Bitmap getChineseMeaning() {
+        return chineseMeaning;
+    }
+
+    public void setChineseMeaning(Bitmap chineseMeaning) {
+        this.chineseMeaning = chineseMeaning;
+    }
 }

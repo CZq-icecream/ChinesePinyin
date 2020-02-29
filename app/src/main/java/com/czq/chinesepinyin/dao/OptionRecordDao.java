@@ -7,7 +7,6 @@ import androidx.room.Dao;
  * @date 2020.2.27
  * @author czq
  */
-@Dao
 public class OptionRecordDao {
 
 }

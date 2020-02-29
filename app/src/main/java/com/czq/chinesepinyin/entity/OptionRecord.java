@@ -18,8 +18,69 @@ public class OptionRecord {
 
     private Integer lessonId; //该记录所属课程的id
     private Integer progress;  //进度，也表示该记录位于课程的位置（索引）
-    private SoundPool soundPool;    //读音
+    private Sound sound;    //读音
     private List<Bitmap> bitmaps = new ArrayList<>(4);  //四张备选项的图片
     private Integer correctId;  //正确答案的id
 
+    public OptionRecord() {
+    }
+
+    public OptionRecord(Integer lessonId, Integer progress, Sound sound, List<Bitmap> bitmaps, Integer correctId) {
+        this.lessonId = lessonId;
+        this.progress = progress;
+        this.sound = sound;
+        this.bitmaps = bitmaps;
+        this.correctId = correctId;
+    }
+
+    @Override
+    public String toString() {
+        return "OptionRecord{" +
+                "lessonId=" + lessonId +
+                ", progress=" + progress +
+                ", sound=" + sound +
+                ", bitmaps=" + bitmaps +
+                ", correctId=" + correctId +
+                '}';
+    }
+
+    public Integer getLessonId() {
+        return lessonId;
+    }
+
+    public void setLessonId(Integer lessonId) {
+        this.lessonId = lessonId;
+    }
+
+    public Integer getProgress() {
+        return progress;
+    }
+
+    public void setProgress(Integer progress) {
+        this.progress = progress;
+    }
+
+    public Sound getSound() {
+        return sound;
+    }
+
+    public void setSound(Sound sound) {
+        this.sound = sound;
+    }
+
+    public List<Bitmap> getBitmaps() {
+        return bitmaps;
+    }
+
+    public void setBitmaps(List<Bitmap> bitmaps) {
+        this.bitmaps = bitmaps;
+    }
+
+    public Integer getCorrectId() {
+        return correctId;
+    }
+
+    public void setCorrectId(Integer correctId) {
+        this.correctId = correctId;
+    }
 }

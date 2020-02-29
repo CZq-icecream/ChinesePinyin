@@ -8,6 +8,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.czq.chinesepinyin.dao.UserDao;
 import com.czq.chinesepinyin.database.UserDatabase;
+import com.czq.chinesepinyin.entity.User;
 
 /**
  * 提供访问API的repository
@@ -41,5 +42,7 @@ public class UserRepository {
         return userDao.selectGainToday();
     }
 
-
+    public User selectUser(){
+        return userDao.selectUser();
+    }
 }

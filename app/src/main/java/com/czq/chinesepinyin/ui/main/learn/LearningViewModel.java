@@ -8,6 +8,7 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.czq.chinesepinyin.entity.User;
 import com.czq.chinesepinyin.repository.UserRepository;
 
 /**
@@ -23,12 +24,13 @@ public class LearningViewModel extends AndroidViewModel {
     private LiveData<Integer> reviewXP;
     private LiveData<Integer> gainToday;
 
+    public LiveData<Integer> liveData = new MutableLiveData<>(1);
+
     public LearningViewModel(@NonNull Application application) {
         super(application);
         UserRepository userRepository = new UserRepository(application);
         learningDay = userRepository.selectLearningDay();
         newXP = userRepository.selectNewXP();
-        Log.d(TAG, userRepository.selectNewXP().getValue() + "");
         reviewXP = userRepository.selectReviewXP();
         gainToday = userRepository.selectGainToday();
     }
@@ -45,4 +47,5 @@ public class LearningViewModel extends AndroidViewModel {
     public LiveData<Integer> getGainToday(){
         return gainToday;
     }
+
 }

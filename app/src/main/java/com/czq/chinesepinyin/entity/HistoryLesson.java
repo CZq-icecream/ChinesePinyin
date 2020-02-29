@@ -2,6 +2,7 @@ package com.czq.chinesepinyin.entity;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import java.util.List;
@@ -26,5 +27,28 @@ public class HistoryLesson {
     @ColumnInfo(name = "progress")
     private Integer progress;
 
+    public HistoryLesson() {
+    }
 
+    @Ignore
+    public HistoryLesson(Integer lessonId, Integer progress) {
+        this.lessonId = lessonId;
+        this.progress = progress;
+    }
+
+    public Integer getLessonId() {
+        return lessonId;
+    }
+
+    public void setLessonId(Integer lessonId) {
+        this.lessonId = lessonId;
+    }
+
+    public Integer getProgress() {
+        return progress;
+    }
+
+    public void setProgress(Integer progress) {
+        this.progress = progress;
+    }
 }
