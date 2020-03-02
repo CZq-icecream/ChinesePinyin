@@ -41,25 +41,25 @@
         android:paddingTop="32dp"
         android:layout_weight="2">
 
-        <TableRow
+        <LinearLayout
             android:layout_gravity="center"
             android:layout_weight="1"
+            android:orientation="horizontal"
             >
             <ImageButton
                 android:id="@+id/option1"
                 style="@style/ImageButtonLayout"
-                android:src="@drawable/select"
                 />
             <ImageButton
                 android:id="@+id/option2"
                 style="@style/ImageButtonLayout"
-                android:src="@drawable/select"
                 />
-        </TableRow>
+        </LinearLayout>
 
-        <TableRow
+        <LinearLayout
             android:layout_gravity="center"
             android:layout_weight="1"
+            android:orientation="horizontal"
             >
             <ImageButton
                 android:id="@+id/option3"
@@ -69,7 +69,7 @@
                 android:id="@+id/option4"
                 style="@style/ImageButtonLayout"
                 />
-        </TableRow>
+        </LinearLayout>
 
     </TableLayout>
 

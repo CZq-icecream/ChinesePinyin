@@ -31,6 +31,8 @@
         android:scrollbars="vertical"
         >
 
+
+
         <LinearLayout
             android:layout_marginTop="0dp"
             android:layout_marginBottom="0dp"
@@ -50,7 +52,7 @@
                 android:layout_margin="0dp"
                 android:padding="0dp"
                 android:scaleType="center"
-                android:src="@drawable/a" />
+                />
 
             <LinearLayout
                 android:layout_marginTop="0dp"
@@ -58,7 +60,7 @@
                 android:paddingTop="0dp"
                 android:paddingBottom="0dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:orientation="vertical"
                 >
 
@@ -67,9 +69,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="0dp"
+                    android:layout_gravity="center"
                     android:padding="0dp"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/a_illustration" />
+                    />
 
                 <ImageView
                     android:id="@+id/chinese_meaning"
@@ -80,20 +83,23 @@
                     android:layout_marginBottom="0dp"
                     android:paddingTop="0dp"
                     android:paddingBottom="0dp"
-                    android:src="@drawable/a_meaning"
                     />
 
             </LinearLayout>
 
-            <VideoView
-                android:id="@+id/video"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                />
+<!--            <VideoView-->
+<!--                android:id="@+id/video"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="0dp"-->
+<!--                android:layout_weight="1"-->
+<!--                android:layout_gravity="center"-->
+<!--                />-->
 
         </LinearLayout>
-    </ScrollView>
+
+
+        </ScrollView>
+
 
     <Button
         android:id="@+id/next"

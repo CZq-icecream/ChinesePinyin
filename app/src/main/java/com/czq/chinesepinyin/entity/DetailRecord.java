@@ -13,18 +13,29 @@ public class DetailRecord {
 
     private Integer lessonId;   //该记录所属课程的id
     private Bitmap chinese;  //该记录的字形
-    private SoundPool soundPool;    //该字读音
+    private Sound sound;    //该字读音
     private Bitmap illustration;    //该字的图片描述
     private Bitmap chineseMeaning;  //该字的解释
 //    private MediaPlayer mediaPlayer;    //暂定为视频解释
 
 
-    public DetailRecord(Integer lessonId, Bitmap chinese, SoundPool soundPool, Bitmap illustration, Bitmap chineseMeaning) {
+    public DetailRecord(Integer lessonId, Bitmap chinese, Sound sound, Bitmap illustration, Bitmap chineseMeaning) {
         this.lessonId = lessonId;
         this.chinese = chinese;
-        this.soundPool = soundPool;
+        this.sound = sound;
         this.illustration = illustration;
         this.chineseMeaning = chineseMeaning;
+    }
+
+    @Override
+    public String toString() {
+        return "DetailRecord{" +
+                "lessonId=" + lessonId +
+                ", chinese=" + chinese +
+                ", sound=" + sound +
+                ", illustration=" + illustration +
+                ", chineseMeaning=" + chineseMeaning +
+                '}';
     }
 
     public Integer getLessonId() {
@@ -43,12 +54,12 @@ public class DetailRecord {
         this.chinese = chinese;
     }
 
-    public SoundPool getSoundPool() {
-        return soundPool;
+    public Sound getSound() {
+        return sound;
     }
 
-    public void setSoundPool(SoundPool soundPool) {
-        this.soundPool = soundPool;
+    public void setSound(Sound sound) {
+        this.sound = sound;
     }
 
     public Bitmap getIllustration() {

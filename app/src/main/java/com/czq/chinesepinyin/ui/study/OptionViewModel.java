@@ -20,15 +20,22 @@ public class OptionViewModel extends AndroidViewModel {
     private OptionRecordRepository optionRecordRepository;
     private LiveData<OptionRecord> optionRecordLiveData;
 
+    private LiveData<Integer> flag;
 
     public OptionViewModel(@NonNull Application application) {
         super(application);
 
         optionRecordRepository = new OptionRecordRepository(application);
-        optionRecordLiveData = optionRecordRepository.getOptionRecord();
     }
 
     public LiveData<OptionRecord> getOptionRecordLiveData(){
-        return optionRecordLiveData;
+        return optionRecordRepository.getOptionRecord();
+//        if (flag == null) {
+//            flag = optionRecordRepository.getFlag();
+//            return optionRecordRepository.getOptionRecord();
+//        }else{
+//            return optionRecordLiveData;
+//        }
+
     }
 }

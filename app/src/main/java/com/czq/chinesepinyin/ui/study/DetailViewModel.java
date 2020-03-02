@@ -7,7 +7,9 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.czq.chinesepinyin.entity.DetailRecord;
 import com.czq.chinesepinyin.entity.OptionRecord;
+import com.czq.chinesepinyin.repository.DetailRecordRepository;
 
 /**
  * @date 2020.2.27
@@ -15,17 +17,17 @@ import com.czq.chinesepinyin.entity.OptionRecord;
  */
 public class DetailViewModel extends AndroidViewModel {
 
-    /**
-     * 这里的optionRecord发生修改时可以监测到
-     */
-    private OptionRecord optionRecord;
-    private MutableLiveData<OptionRecord> optionRecordLiveData;
-
+    private static final String TAG = "DetailViewModel";
+    private DetailRecordRepository detailRecordRepository;
+    private LiveData<DetailRecord> detailRecordLiveData;
 
     public DetailViewModel(@NonNull Application application) {
         super(application);
 
-        //1. 访问数据库，得到自己的课程id和progress
-        //2. 访问数据库或者网络获取OptionRecord
+        detailRecordRepository = new DetailRecordRepository(application);
+    }
+
+    public LiveData<DetailRecord> getDetailRecordLiveData(){
+        return detailRecordRepository.getDetailRecord();
     }
 }

@@ -37,4 +37,12 @@ public interface HistoryLessonDao {
      */
     @Insert(onConflict = OnConflictStrategy.ABORT)
     void insertHistoryLesson(HistoryLesson historyLesson);
+
+    /**
+     * 更新用户学习进度
+     * @param lessonId
+     * @param progress
+     */
+    @Query("UPDATE history_lesson SET progress = :progress WHERE lesson_id = :lessonId")
+    void updateProgress(Integer lessonId, int progress);
 }

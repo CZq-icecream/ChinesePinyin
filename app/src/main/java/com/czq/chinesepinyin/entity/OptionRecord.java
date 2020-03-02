@@ -19,13 +19,13 @@ public class OptionRecord {
     private Integer lessonId; //该记录所属课程的id
     private Integer progress;  //进度，也表示该记录位于课程的位置（索引）
     private Sound sound;    //读音
-    private List<Bitmap> bitmaps = new ArrayList<>(4);  //四张备选项的图片
+    private Bitmap[] bitmaps;  //四张备选项的图片
     private Integer correctId;  //正确答案的id
 
     public OptionRecord() {
     }
 
-    public OptionRecord(Integer lessonId, Integer progress, Sound sound, List<Bitmap> bitmaps, Integer correctId) {
+    public OptionRecord(Integer lessonId, Integer progress, Sound sound, Bitmap[] bitmaps, Integer correctId) {
         this.lessonId = lessonId;
         this.progress = progress;
         this.sound = sound;
@@ -68,11 +68,11 @@ public class OptionRecord {
         this.sound = sound;
     }
 
-    public List<Bitmap> getBitmaps() {
+    public Bitmap[] getBitmaps() {
         return bitmaps;
     }
 
-    public void setBitmaps(List<Bitmap> bitmaps) {
+    public void setBitmaps(Bitmap[] bitmaps) {
         this.bitmaps = bitmaps;
     }
 

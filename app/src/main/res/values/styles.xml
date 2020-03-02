@@ -59,8 +59,9 @@
     </style>
     
 <!--    OptionFragment页面按钮的样式-->
+<!--    https://blog.csdn.net/weixin_34405354/article/details/86054797-->
     <style name="ImageButtonLayout">
-        <item name="android:layout_weight">1</item>
+        <item name="android:layout_weight">0.5</item>
         <item name="android:layout_gravity">center</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
