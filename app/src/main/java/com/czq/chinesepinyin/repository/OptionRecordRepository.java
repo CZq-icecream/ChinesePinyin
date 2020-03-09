@@ -23,9 +23,5 @@ public class OptionRecordRepository {
     public LiveData<OptionRecord> getOptionRecord() {
         return optionRecordService.getOptionRecordLiveData();
     }
-
-    public LiveData<Integer> getFlag() {
-        return optionRecordService.getFlag();
-    }
 }
 

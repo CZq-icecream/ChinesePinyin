@@ -16,15 +16,16 @@ public class DetailRecord {
     private Sound sound;    //该字读音
     private Bitmap illustration;    //该字的图片描述
     private Bitmap chineseMeaning;  //该字的解释
-//    private MediaPlayer mediaPlayer;    //暂定为视频解释
+    private Video video;    //学习视频
 
 
-    public DetailRecord(Integer lessonId, Bitmap chinese, Sound sound, Bitmap illustration, Bitmap chineseMeaning) {
+    public DetailRecord(Integer lessonId, Bitmap chinese, Sound sound, Bitmap illustration, Bitmap chineseMeaning, Video video) {
         this.lessonId = lessonId;
         this.chinese = chinese;
         this.sound = sound;
         this.illustration = illustration;
         this.chineseMeaning = chineseMeaning;
+        this.video = video;
     }
 
     @Override
@@ -76,5 +77,13 @@ public class DetailRecord {
 
     public void setChineseMeaning(Bitmap chineseMeaning) {
         this.chineseMeaning = chineseMeaning;
+    }
+
+    public Video getVideo() {
+        return video;
+    }
+
+    public void setVideo(Video video) {
+        this.video = video;
     }
 }

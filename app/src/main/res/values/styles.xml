@@ -65,6 +65,16 @@
         <item name="android:layout_gravity">center</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
+        <item name="android:background">@drawable/option_fragment_iamge_button_background_change</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:layout_margin">10dp</item>
     </style>
-    
+
+<!--    圆角按钮的样式-->
+    <style name="RoundButton">
+        <item name="android:background">@drawable/button_round</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
 </resources>

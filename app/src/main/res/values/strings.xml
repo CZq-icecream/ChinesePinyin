@@ -10,6 +10,7 @@
     <string name="learning_fragment_learning_day">Total Learning:\n%d Days</string>
     <string name="learning_fragment_daily">Daily</string>
     <string name="learning_fragment_daily_goal">Daily Goal</string>
+    <string name="learning_fragment_progress">%d / %d XP</string>
     <string name="learning_fragment_new_xp">new\n%d XP</string>
     <string name="learning_fragment_review_xp">review\n%d XP</string>
     <string name="learning_fragment_gain_xp_today">Gain Today\n%d XP</string>

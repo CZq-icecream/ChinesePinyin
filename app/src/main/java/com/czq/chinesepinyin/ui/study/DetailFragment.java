@@ -4,6 +4,8 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
 import android.graphics.Point;
+import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Display;
@@ -15,6 +17,8 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.MediaController;
+import android.widget.VideoView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -49,6 +53,7 @@ public class DetailFragment extends Fragment {
     private ImageButton chineseImageButton;
     private ImageView chineseIllustrationImageView;
     private ImageView chineseMeaningImageView;
+    private VideoView videoView;
     private Button nextButton;
 
     @Nullable
@@ -65,7 +70,30 @@ public class DetailFragment extends Fragment {
             @Override
             public void run() {
                 init(view, controller);
+                subscribe(detailViewModel, controller);
+            }
+        });
 
+        return view;
+    }
+
+
+
+    private void init(View view, NavController controller){
+        back = view.findViewById(R.id.back);
+        chineseImageButton = view.findViewById(R.id.chinese);
+        chineseIllustrationImageView = view.findViewById(R.id.chinese_illustration);
+        chineseMeaningImageView = view.findViewById(R.id.chinese_meaning);
+        videoView = view.findViewById(R.id.video);
+        nextButton = view.findViewById(R.id.next);
+    }
+
+
+    private void subscribe(DetailViewModel detailViewModel, NavController controller) {
+
+        detailViewModel.getDetailRecordLiveData().observe(this, new Observer<DetailRecord>() {
+            @Override
+            public void onChanged(DetailRecord detailRecord) {
                 //获取屏幕的宽和高
                 //https://blog.csdn.net/noige/article/details/79225833
                 Display display = getActivity().getWindowManager().getDefaultDisplay();
@@ -73,7 +101,6 @@ public class DetailFragment extends Fragment {
                 display.getSize(size);
                 int width = size.x;
                 int height = size.y;
-
 
                 detailViewModel.getDetailRecordLiveData().observe(DetailFragment.this, new Observer<DetailRecord>() {
                     @Override
@@ -93,67 +120,62 @@ public class DetailFragment extends Fragment {
                 nextButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        updateProgress();
                         controller.navigate(R.id.action_detailFragment_to_optionFragment);
                     }
                 });
             }
         });
 
-        return view;
-    }
-
-
-
-    private void init(View view, NavController controller){
-        back = view.findViewById(R.id.back);
-        chineseImageButton = view.findViewById(R.id.chinese);
-        chineseIllustrationImageView = view.findViewById(R.id.chinese_illustration);
-        chineseMeaningImageView = view.findViewById(R.id.chinese_meaning);
-        nextButton = view.findViewById(R.id.next);
-
-//        nextButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                UserDatabase userDatabase = UserDatabase.getUserDatabase(getContext());
-//                UserDao userDao = userDatabase.userDao();
-//                HistoryLessonDatabase historyLessonDatabase = HistoryLessonDatabase.getHistoryLessonDatabase(getContext());
-//                HistoryLessonDao historyLessonDao = historyLessonDatabase.historyLessonDao();
-//                UserDatabase.databaseWriteExecutor.execute(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        User user = userDao.selectUser();
-//                        HistoryLesson historyLesson = historyLessonDao.selectHistoryLesson(user.getCurrentLessonId());
-//                        historyLessonDao.updateProgress(historyLesson.getLessonId(), historyLesson.getProgress() + 1);
-//                    }
-//                });
-//                controller.navigate(R.id.action_detailFragment_to_optionFragment);
-//            }
-//        });
-    }
-
-
-    private void subscribe(DetailViewModel detailViewModel, NavController controller) {
-        detailViewModel.getDetailRecordLiveData().observe(this, new Observer<DetailRecord>() {
+        String rawPath = "android.resource://" + getActivity().getPackageName() + "/" + R.raw.a;
+        videoView.setVideoPath(rawPath);
+        videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
             @Override
-            public void onChanged(DetailRecord detailRecord) {
+            public void onPrepared(MediaPlayer mp) {
+                Log.d(TAG, "onPrepared");
+            }
+        });
+        videoView.setVideoURI(Uri.parse(rawPath));
+        videoView.setMediaController(new MediaController(getContext()));
+        videoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mp) {
+                Log.d(TAG, "onCompletion");
+            }
+        });
+        videoView.setOnErrorListener(new MediaPlayer.OnErrorListener() {
+            @Override
+            public boolean onError(MediaPlayer mp, int what, int extra) {
+                Log.d(TAG, "onError");
+                return false;
+            }
+        });
+        videoView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                videoView.start();
+            }
+        });
+//                videoView.start();
+        Log.d(TAG, getActivity().getPackageName());
+    }
 
-//                chineseImageButton.setImageBitmap(detailRecord.getChinese());
-//                chineseIllustrationImageView.setImageBitmap(detailRecord.getIllustration());
-//                chineseMeaningImageView.setImageBitmap(detailRecord.getChineseMeaning());
-
-//                chineseImageButton.setImageBitmap(getScaleBitmap(detailRecord.getChinese(),
-//                        chineseImageButton.getWidth(), chineseImageButton.getHeight()));
-//                chineseIllustrationImageView.setImageBitmap(getScaleBitmap(detailRecord.getIllustration(),
-//                        chineseIllustrationImageView.getWidth(), chineseIllustrationImageView.getHeight()));
-//                chineseMeaningImageView.setImageBitmap(getScaleBitmap(detailRecord.getChineseMeaning(),
-//                        chineseMeaningImageView.getWidth(), chineseMeaningImageView.getHeight()));
-
-                nextButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        controller.navigate(R.id.action_detailFragment_to_optionFragment);
-                    }
-                });
+    /**
+     * 按下next按钮之后更新课程的进度
+     */
+    private void updateProgress(){
+        UserDatabase userDatabase = UserDatabase.getUserDatabase(getContext());
+        UserDao userDao = userDatabase.userDao();
+        HistoryLessonDatabase historyLessonDatabase = HistoryLessonDatabase.getHistoryLessonDatabase(getContext());
+        HistoryLessonDao historyLessonDao = historyLessonDatabase.historyLessonDao();
+        UserDatabase.databaseWriteExecutor.execute(new Runnable() {
+            @Override
+            public void run() {
+                User user = userDao.selectUser();
+                int lessonId = user.getCurrentLessonId();
+                HistoryLesson historyLesson = historyLessonDao.selectHistoryLesson(lessonId);
+                int progress = historyLesson.getProgress();
+                historyLessonDao.updateProgress(lessonId, progress + 1);
             }
         });
     }
@@ -166,38 +188,6 @@ public class DetailFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-
-//        view.post(new Runnable() {
-//            @Override
-//            public void run() {
-//                //获取屏幕的宽和高
-//                //https://blog.csdn.net/noige/article/details/79225833
-//                Display display = getActivity().getWindowManager().getDefaultDisplay();
-//                Point size = new Point();
-//                display.getSize(size);
-//                int width = size.x;
-//                int height = size.y;
-//                Log.d(TAG, "In onStart(), width = " + width + ", height = " + height);
-//
-//                detailViewModel.getDetailRecordLiveData().observe(DetailFragment.this, new Observer<DetailRecord>() {
-//                    @Override
-//                    public void onChanged(DetailRecord detailRecord) {
-//                        ViewGroup.LayoutParams layoutParams = chineseImageButton.getLayoutParams();
-//                        layoutParams.width = width / 2;
-//                        layoutParams.height = height / 2;
-//                        chineseImageButton.setLayoutParams(layoutParams);
-//                        int w = chineseImageButton.getWidth();
-//                        int h = chineseImageButton.getMeasuredHeight();
-//                        Log.d(TAG, "w = " + w + ", h = " + h);
-//                        chineseImageButton.setScaleType(ImageView.ScaleType.FIT_XY);
-//                        chineseImageButton.setImageBitmap(detailRecord.getChinese());
-////                        chineseImageButton.setImageBitmap(getScaleBitmap(detailRecord.getChinese(),
-////                            chineseImageButton.getWidth(),chineseImageButton.getHeight()));
-//                    }
-//                });
-//            }
-//        });
-
     }
 
 
@@ -213,7 +203,6 @@ public class DetailFragment extends Fragment {
     private Bitmap getScaleBitmap(Bitmap bitmap, float newWidth, float newHeight) {
         int width = bitmap.getWidth();
         int height = bitmap.getHeight();
-        Log.d(TAG, "width = " + width + ", height = " + height + ", newWidth = " + newWidth + ", newHeight = " + newHeight);
         float scaleWidth = newWidth / width;
         float scaleHeight = newHeight / height;
 

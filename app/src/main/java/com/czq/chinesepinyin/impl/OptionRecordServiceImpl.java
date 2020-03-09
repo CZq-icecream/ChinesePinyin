@@ -41,6 +41,7 @@ public class OptionRecordServiceImpl implements OptionRecordService {
     MutableLiveData<Integer> flag;
 
     public OptionRecordServiceImpl(Application application) {
+        Log.d(TAG, "i am OptionRecordServiceImpl hhh");
         userDatabase = UserDatabase.getUserDatabase(application);
         historyLessonDatabase = HistoryLessonDatabase.getHistoryLessonDatabase(application);
         assetManager = application.getAssets();

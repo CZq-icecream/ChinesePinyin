@@ -84,61 +84,105 @@
                 tools:text="Daily Goal"
                  />
         </TableRow>
+
+
+
         <TableRow
             android:gravity="center"
             android:layout_weight="1">
 
-            <TextView
-                android:id="@+id/new_xp"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_weight="1"
-                android:textAlignment="center"
-                tools:text="new\n5XP" />
-            <TextView
-                android:id="@+id/review_xp"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_weight="1"
-                android:textAlignment="center"
-                tools:text="review\n5XP"
-                />
-            <TextView
-                android:id="@+id/gain_xp"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_weight="1"
-                android:textAlignment="center"
-                tools:text="gain today\n15XP"
-                />
+                <TextView
+                    android:id="@+id/new_xp"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:textAlignment="center"
+                    android:textSize="28sp"
+                    tools:text="new\n5XP" />
+
+                <TextView
+                    android:id="@+id/review_xp"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:textAlignment="center"
+                    android:textSize="28sp"
+                    tools:text="review\n5XP"
+                    />
+                <TextView
+                    android:id="@+id/gain_xp"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:textAlignment="center"
+                    android:textSize="28sp"
+                    tools:text="gain today\n15XP"
+                    />
+
         </TableRow>
+
+        <TableRow
+            android:layout_weight="1"
+            >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:paddingStart="32dp"
+                android:paddingEnd="32dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:orientation="vertical"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:textAlignment="center"
+                    android:text="@string/learning_fragment_daily_goal"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:textAlignment="center"
+                    android:text="@string/learning_fragment_progress"
+                    />
+
+            </LinearLayout>
+
+
+            <ProgressBar
+                android:id="@+id/progress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:progressDrawable="@drawable/progress"
+                android:layout_gravity="center_vertical"
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                />
+
+        </TableRow>
+
+
+
         <TableRow
             android:gravity="center"
             android:layout_weight="1">
             <Button
                 android:id="@+id/practice_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:text="@string/learning_fragment_practice"
+                android:background="@drawable/button_round"
                 tools:text="Practice"
                 />
         </TableRow>
     </TableLayout>
 
-    <TextView
-        android:id="@+id/text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        />
-    <Button
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="test"
-        />
 
 
 </LinearLayout>

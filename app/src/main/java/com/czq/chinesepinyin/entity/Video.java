@@ -2,52 +2,58 @@ package com.czq.chinesepinyin.entity;
 
 import android.content.res.AssetFileDescriptor;
 import android.content.res.AssetManager;
-import android.media.AudioManager;
 import android.media.MediaPlayer;
-import android.media.SoundPool;
-import android.util.Log;
 
 import java.io.IOException;
 
 /**
- * 音频类
- * @date 2020.2.28
+ * 表示视频
+ * @date 2020.3.3
  * @author czq
  */
-public class Sound {
+public class Video {
 
     /**
-     * 文件路径，方便后面改为url
+     * 文件路径
      */
     private String path;
     /**
-     * 文件名
+     * 文件名称
      */
     private String name;
     private AssetManager assetManager;
 
-    public Sound(String path, String name, AssetManager assetManager) {
+    public Video(String path, String name, AssetManager assetManager) {
         this.path = path;
         this.name = name;
         this.assetManager = assetManager;
     }
 
     /**
-     * 音频播放
-     * https://blog.csdn.net/dianziagen/article/details/56676177
+     * 视频播放
+     * https://juejin.im/post/5bec0958e51d454c7d0f9a32#heading-2
      */
     public void play(){
+        MediaPlayer mediaPlayer = new MediaPlayer();
         try {
             AssetFileDescriptor assetFileDescriptor = assetManager.openFd(path);
-            MediaPlayer mediaPlayer = new MediaPlayer();
-            mediaPlayer.reset();
             mediaPlayer.setDataSource(assetFileDescriptor.getFileDescriptor(),
                     assetFileDescriptor.getStartOffset(), assetFileDescriptor.getLength());
-            mediaPlayer.prepare();
-            mediaPlayer.start();
-        } catch (IOException ioe) {
-            ioe.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+
+        //设置准备就绪状态监听
+        mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+            @Override
+            public void onPrepared(MediaPlayer mp) {
+                //开始播放
+                mediaPlayer.start();
+            }
+        });
+
+        //准备播放
+        mediaPlayer.prepareAsync();
     }
 
     public String getPath() {

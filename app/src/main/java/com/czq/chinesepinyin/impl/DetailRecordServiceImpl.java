@@ -18,6 +18,7 @@ import com.czq.chinesepinyin.entity.DetailRecord;
 import com.czq.chinesepinyin.entity.HistoryLesson;
 import com.czq.chinesepinyin.entity.Sound;
 import com.czq.chinesepinyin.entity.User;
+import com.czq.chinesepinyin.entity.Video;
 import com.czq.chinesepinyin.service.DetailRecordService;
 
 import java.io.IOException;
@@ -58,6 +59,7 @@ public class DetailRecordServiceImpl implements DetailRecordService {
         private static final String SUFFIX_PIC = ".png";
         private static final String SUFFIX_ILLUSTRATION = "_illustration.jpeg";
         private static final String SUFFIX_MEANING = "_meaning.png";
+        private static final String SUFFIX_VIDEO = ".mp4    ";
 
         @Override
         protected Void doInBackground(Void... voids) {
@@ -81,7 +83,9 @@ public class DetailRecordServiceImpl implements DetailRecordService {
                 Bitmap chineseIllustration = parseBitmap(chineseIllustrationPath, list, assetManager);
                 String chineseMeaningPath = PATH + "/" + list[progress] + "/" + list[progress] + SUFFIX_MEANING;
                 Bitmap chineseMeaning = parseBitmap(chineseMeaningPath, list, assetManager);
-                detailRecord = new DetailRecord(currentLessonId, chinese, sound, chineseIllustration, chineseMeaning);
+//                Video video = parseVideo(progress, list, assetManager);
+                Video video = null;
+                detailRecord = new DetailRecord(currentLessonId, chinese, sound, chineseIllustration, chineseMeaning, video);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -127,7 +131,11 @@ public class DetailRecordServiceImpl implements DetailRecordService {
             return new Sound(soundPath, soundName, assetManager);
         }
 
-
+        private Video parseVideo(int index, String[] list, AssetManager assetManager) {
+            String videoPath = PATH + "/" + list[index] + SUFFIX_VIDEO;
+            String videoName= list[index] + SUFFIX_VIDEO;
+            return new Video(videoPath, videoName, assetManager);
+        }
     }
 }
 

@@ -35,6 +35,8 @@ import com.czq.chinesepinyin.entity.Sound;
 
 /**
  * 学习界面的Fragment
+ * http://www.imooc.com/article/details/id/285989
+ * http://www.imooc.com/article/286253
  * @date 2020.2.24
  * @author czq
  */
@@ -48,15 +50,17 @@ public class OptionFragment extends Fragment {
     private ImageButton option3;
     private ImageButton option4;
 
+    private NavController controller;
+    private OptionViewModel optionViewModel;
     private TextView textView;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_option, container, false);
-        NavController controller = NavHostFragment.findNavController(this);
-        OptionViewModel optionViewModel = ViewModelProviders.of(this).get(OptionViewModel.class);
 
+        View view = inflater.inflate(R.layout.fragment_option, container, false);
+        controller = NavHostFragment.findNavController(this);
+        optionViewModel = ViewModelProviders.of(this).get(OptionViewModel.class);
         //因为控件的设置涉及宽和高，所以需要等计算结束之后才将图片绘制到控件上
         view.post(new Runnable() {
             @Override
@@ -65,8 +69,6 @@ public class OptionFragment extends Fragment {
                 subscribe(optionViewModel, controller);
             }
         });
-
-        textView = view.findViewById(R.id.test);
 
         return view;
     }
@@ -142,7 +144,6 @@ public class OptionFragment extends Fragment {
         int height = bitmap.getHeight();
         int newWidth = imageButton.getWidth();
         int newHeight = imageButton.getHeight();
-        Log.d(TAG, "width = " + width + ", height = " + height + ", newWidth = " + newWidth + ", newHeight = " + newHeight);
         float scaleWidth = ((float)newWidth) / width;
         float scaleHeight = ((float)newHeight) / height;
 

@@ -1,12 +1,15 @@
 package com.czq.chinesepinyin.ui.main.learn;
 
 import android.content.Intent;
+import android.graphics.Point;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -30,12 +33,14 @@ public class LearningFragment extends Fragment {
 
     private static final String TAG = "LearningFragment";
 
+    private ProgressBar progressBar;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_learn, container, false);
 
-        LearningViewModel learningViewModel = ViewModelProviders.of(requireActivity()).get(LearningViewModel.class);
+        LearningViewModel learningViewModel = ViewModelProviders.of(this).get(LearningViewModel.class);
         subscribe(learningViewModel, view);
 
         Button practiceButton = view.findViewById(R.id.practice_button);
@@ -47,22 +52,13 @@ public class LearningFragment extends Fragment {
             }
         });
 
-        learningViewModel.liveData.observe(this, new Observer<Integer>() {
-            @Override
-            public void onChanged(Integer integer) {
-                TextView textView = view.findViewById(R.id.text);
-                textView.setText("" + learningViewModel.liveData.getValue());
-            }
-        });
-        Button button = view.findViewById(R.id.button);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Integer i = learningViewModel.liveData.getValue();
-                learningViewModel.liveData = new MutableLiveData<>(i + 1);
-            }
-        });
-
+        progressBar = view.findViewById(R.id.progress);
+        progressBar.setProgress(50);
+        Display display = getActivity().getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        progressBar.getLayoutParams().width = size.x / 3;
+        progressBar.invalidate();
 
         return view;
     }
