@@ -26,23 +26,7 @@ public class UserRepository {
         userDao = userDatabase.userDao();
     }
 
-    public LiveData<Integer> selectLearningDay(){
-        return userDao.selectLearningDay();
-    }
-
-    public LiveData<Integer> selectNewXP(){
-        return userDao.selectNewXP();
-    }
-
-    public LiveData<Integer> selectReviewXP(){
-        return userDao.selectReviewXP();
-    }
-
-    public LiveData<Integer> selectGainToday(){
-        return userDao.selectGainToday();
-    }
-
-    public User selectUser(){
+    public LiveData<User> selectUser(){
         return userDao.selectUser();
     }
 }

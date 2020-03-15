@@ -83,7 +83,7 @@ public class OptionRecordServiceImpl implements OptionRecordService {
             //获得User信息（然后这里让UserDao的返回值为User，而不是LiveData，因为LiveData仍然进行异步查询，这样得到的User就为null）
             //TODO 1 user为null时的异常处理
             UserDao userDao = userDatabase.userDao();
-            User user = userDao.selectUser();
+            User user = userDao.selectUser().getValue();
             //TODO 2 historyLesson为null时的异常处理
             //获取HistoryLesson信息（此处同理获取HistoryLesson）
             HistoryLessonDao historyLessonDao = historyLessonDatabase.historyLessonDao();

@@ -65,7 +65,7 @@ public class DetailRecordServiceImpl implements DetailRecordService {
         protected Void doInBackground(Void... voids) {
             //查询用户信息
             UserDao userDao = userDatabase.userDao();
-            User user = userDao.selectUser();
+            User user = userDao.selectUser().getValue();
             //查询当前课程id
             int currentLessonId = user.getCurrentLessonId();
             //查询当前课程信息

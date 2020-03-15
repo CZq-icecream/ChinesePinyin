@@ -22,6 +22,7 @@ import androidx.lifecycle.ViewModelProviders;
 import com.czq.chinesepinyin.R;
 import com.czq.chinesepinyin.dao.UserDao;
 import com.czq.chinesepinyin.database.UserDatabase;
+import com.czq.chinesepinyin.entity.User;
 import com.czq.chinesepinyin.ui.study.StudyActivity;
 
 /**
@@ -33,18 +34,39 @@ public class LearningFragment extends Fragment {
 
     private static final String TAG = "LearningFragment";
 
+    private TextView learningDay;
+    private TextView textProgress;
     private ProgressBar progressBar;
+    private Button buttonPractice;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_learn, container, false);
+        //初始化视图上的控件
+        initView(view);
 
         LearningViewModel learningViewModel = ViewModelProviders.of(this).get(LearningViewModel.class);
         subscribe(learningViewModel, view);
 
-        Button practiceButton = view.findViewById(R.id.practice_button);
-        practiceButton.setOnClickListener(new View.OnClickListener() {
+        return view;
+    }
+
+    /**
+     * 初始化视图上的控件
+     * @param view
+     */
+    private void initView(View view) {
+        learningDay = view.findViewById(R.id.learning_day);
+
+        textProgress = view.findViewById(R.id.text_progress);
+
+        progressBar = view.findViewById(R.id.progress);
+        //设置进度条
+        setProgressBar();
+
+        buttonPractice = view.findViewById(R.id.practice_button);
+        buttonPractice.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(requireActivity(), StudyActivity.class);
@@ -52,16 +74,19 @@ public class LearningFragment extends Fragment {
             }
         });
 
-        progressBar = view.findViewById(R.id.progress);
-        progressBar.setProgress(50);
+    }
+
+    /**
+     * 设置进度条
+     */
+    private void setProgressBar() {
         Display display = getActivity().getWindowManager().getDefaultDisplay();
         Point size = new Point();
         display.getSize(size);
-        progressBar.getLayoutParams().width = size.x / 3;
-        progressBar.invalidate();
-
-        return view;
+        progressBar.getLayoutParams().width = size.x / 2;
+        progressBar.invalidate();;
     }
+
 
     /**
      * 更新UI视图s
@@ -69,28 +94,15 @@ public class LearningFragment extends Fragment {
      * @param view
      */
     private void subscribe(LearningViewModel learningViewModel, View view){
-        learningViewModel.getLearningDay().observe(this, new Observer<Integer>() {
+        learningViewModel.getUserLiveData().observe(this, new Observer<User>() {
             @Override
-            public void onChanged(Integer integer) {
-                ((TextView)view.findViewById(R.id.learning_day)).setText(getResources().getString(R.string.learning_fragment_learning_day, integer));
-            }
-        });
-        learningViewModel.getNewXP().observe(this, new Observer<Integer>() {
-            @Override
-            public void onChanged(Integer integer) {
-                ((TextView)view.findViewById(R.id.new_xp)).setText(getResources().getString(R.string.learning_fragment_new_xp, integer));
-            }
-        });
-        learningViewModel.getReviewXP().observe(this, new Observer<Integer>() {
-            @Override
-            public void onChanged(Integer integer) {
-                ((TextView)view.findViewById(R.id.review_xp)).setText(getResources().getString(R.string.learning_fragment_review_xp, integer));
-            }
-        });
-        learningViewModel.getGainToday().observe(this, new Observer<Integer>() {
-            @Override
-            public void onChanged(Integer integer) {
-                ((TextView)view.findViewById(R.id.gain_xp)).setText(getResources().getString(R.string.learning_fragment_gain_xp_today, integer));
+            public void onChanged(User user) {
+                if (user != null) {
+                    learningDay.setText(getResources().getString(R.string.learning_fragment_learning_day, user.getLearningDays()));
+                    textProgress.setText(getResources().getString(R.string.learning_fragment_progress, user.getGainToday(), user.getDailyGoal()));
+                    progressBar.setMax(user.getDailyGoal());
+                    progressBar.setProgress(user.getGainToday());
+                }
             }
         });
     }

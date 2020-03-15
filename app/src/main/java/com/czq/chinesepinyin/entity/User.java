@@ -41,16 +41,7 @@ public class User {
      */
     @ColumnInfo(name = "daily_goal", defaultValue = "15")
     private Integer dailyGoal;
-    /**
-     * 每日新学习获得xp
-     */
-    @ColumnInfo(name = "daily_new", defaultValue = "5")
-    private Integer dailyNew;
-    /**
-     * 每日复习获得xp
-     */
-    @ColumnInfo(name = "daily_review", defaultValue = "10")
-    private Integer dailyReview;
+
     /**
      * 今日获得xp
      */
@@ -75,21 +66,17 @@ public class User {
                 ", password='" + password + '\'' +
                 ", learningDays=" + learningDays +
                 ", dailyGoal=" + dailyGoal +
-                ", dailyNew=" + dailyNew +
-                ", dailyReview=" + dailyReview +
                 ", gainToday=" + gainToday +
                 ", totalXP=" + totalXP +
                 ", currentLessonId=" + currentLessonId +
                 '}';
     }
 
-    public User(String username, String password, Integer learningDays, Integer dailyGoal, Integer dailyNew, Integer dailyReview, Integer gainToday, Integer totalXP, Integer currentLessonId) {
+    public User(String username, String password, Integer learningDays, Integer dailyGoal, Integer gainToday, Integer totalXP, Integer currentLessonId) {
         this.username = username;
         this.password = password;
         this.learningDays = learningDays;
         this.dailyGoal = dailyGoal;
-        this.dailyNew = dailyNew;
-        this.dailyReview = dailyReview;
         this.gainToday = gainToday;
         this.totalXP = totalXP;
         this.currentLessonId = currentLessonId;
@@ -133,22 +120,6 @@ public class User {
 
     public void setDailyGoal(Integer dailyGoal) {
         this.dailyGoal = dailyGoal;
-    }
-
-    public Integer getDailyNew() {
-        return dailyNew;
-    }
-
-    public void setDailyNew(Integer dailyNew) {
-        this.dailyNew = dailyNew;
-    }
-
-    public Integer getDailyReview() {
-        return dailyReview;
-    }
-
-    public void setDailyReview(Integer dailyReview) {
-        this.dailyReview = dailyReview;
     }
 
     public Integer getGainToday() {

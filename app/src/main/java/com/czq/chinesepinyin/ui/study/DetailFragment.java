@@ -171,7 +171,7 @@ public class DetailFragment extends Fragment {
         UserDatabase.databaseWriteExecutor.execute(new Runnable() {
             @Override
             public void run() {
-                User user = userDao.selectUser();
+                User user = userDao.selectUser().getValue();
                 int lessonId = user.getCurrentLessonId();
                 HistoryLesson historyLesson = historyLessonDao.selectHistoryLesson(lessonId);
                 int progress = historyLesson.getProgress();

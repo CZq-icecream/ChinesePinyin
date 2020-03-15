@@ -19,33 +19,18 @@ public class LearningViewModel extends AndroidViewModel {
 
     private static final String TAG = "LearningViewModel";
 
-    private LiveData<Integer> learningDay;
-    private LiveData<Integer> newXP;
-    private LiveData<Integer> reviewXP;
-    private LiveData<Integer> gainToday;
+    private LiveData<User> userLiveData;
 
     public LiveData<Integer> liveData = new MutableLiveData<>(1);
 
     public LearningViewModel(@NonNull Application application) {
         super(application);
         UserRepository userRepository = new UserRepository(application);
-        learningDay = userRepository.selectLearningDay();
-        newXP = userRepository.selectNewXP();
-        reviewXP = userRepository.selectReviewXP();
-        gainToday = userRepository.selectGainToday();
+        userLiveData = userRepository.selectUser();
     }
 
-    public LiveData<Integer> getLearningDay(){
-        return learningDay;
-    }
-    public LiveData<Integer> getNewXP(){
-        return newXP;
-    }
-    public LiveData<Integer> getReviewXP(){
-        return reviewXP;
-    }
-    public LiveData<Integer> getGainToday(){
-        return gainToday;
+    public LiveData<User> getUserLiveData(){
+        return userLiveData;
     }
 
 }

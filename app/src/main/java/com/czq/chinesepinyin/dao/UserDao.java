@@ -25,27 +25,6 @@ public interface UserDao {
     LiveData<Integer> selectLearningDay();
 
     /**
-     * 查找通过学习新知识获得的xp
-     * @return
-     */
-    @Query("SELECT daily_new FROM user LIMIT 1")
-    LiveData<Integer> selectNewXP();
-
-    /**
-     * 更新每日通过学习新知识获得的xp
-     * @param newXP
-     */
-    @Query("UPDATE user SET daily_new = :newXP WHERE id = (SELECT id from user ORDER BY id ASC LIMIT 1)")
-    void updateNewXP(Integer newXP);
-
-    /**
-     * 查找通过复习获得的xp
-     * @return
-     */
-    @Query("SELECT daily_review FROM user LIMIT 1")
-    LiveData<Integer> selectReviewXP();
-
-    /**
      * 查找今日获得的xp
      * @return
      */
@@ -69,5 +48,5 @@ public interface UserDao {
      * @return
      */
     @Query("SELECT * FROM user LIMIT 1")
-    User selectUser();
+    LiveData<User> selectUser();
 }
