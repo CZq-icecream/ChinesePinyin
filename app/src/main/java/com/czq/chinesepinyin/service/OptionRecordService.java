@@ -11,6 +11,4 @@ import com.czq.chinesepinyin.entity.OptionRecord;
 public interface OptionRecordService {
 
     LiveData<OptionRecord> getOptionRecordLiveData();
-
-    LiveData<Integer> getFlag();
 }

@@ -1,4 +1,4 @@
-package com.czq.chinesepinyin.impl;
+package com.czq.chinesepinyin.service.impl;
 
 import android.app.Application;
 import android.content.res.AssetManager;
@@ -38,7 +38,6 @@ public class OptionRecordServiceImpl implements OptionRecordService {
     private OptionRecord optionRecord;
     private MutableLiveData<OptionRecord> optionRecordMutableLiveData = new MutableLiveData<>();
     private AssetManager assetManager;
-    MutableLiveData<Integer> flag;
 
     public OptionRecordServiceImpl(Application application) {
         Log.d(TAG, "i am OptionRecordServiceImpl hhh");
@@ -56,14 +55,7 @@ public class OptionRecordServiceImpl implements OptionRecordService {
         //获取用户信息
         new FetchOptionRecordTask().execute();
 
-        Log.d(TAG, "flag = " + flag);
-
         return optionRecordMutableLiveData;
-    }
-
-    @Override
-    public LiveData<Integer> getFlag(){
-        return flag;
     }
 
     /**
@@ -83,17 +75,14 @@ public class OptionRecordServiceImpl implements OptionRecordService {
             //获得User信息（然后这里让UserDao的返回值为User，而不是LiveData，因为LiveData仍然进行异步查询，这样得到的User就为null）
             //TODO 1 user为null时的异常处理
             UserDao userDao = userDatabase.userDao();
-            User user = userDao.selectUser().getValue();
+            User user = userDao.getUser();
             //TODO 2 historyLesson为null时的异常处理
             //获取HistoryLesson信息（此处同理获取HistoryLesson）
             HistoryLessonDao historyLessonDao = historyLessonDatabase.historyLessonDao();
             HistoryLesson historyLesson = historyLessonDao.selectHistoryLesson(user.getCurrentLessonId());
-
             try {
                 //此处暂时把这个进度作为assets文件夹中开始出题的位置
                 Integer progress = historyLesson.getProgress();
-                flag = new MutableLiveData<>(progress);
-                Log.d(TAG, "flag in FetchOptionRecordTask = " + flag);
                 String[] list = assetManager.list(PATH);
                 Bitmap[] bitmaps = new Bitmap[4];
                 Random random = new Random();
@@ -113,13 +102,10 @@ public class OptionRecordServiceImpl implements OptionRecordService {
                     bitmaps[i] = parseBitmap(j, list, assetManager);
                 }
 
-                Log.d(TAG, "repeate??");
                 optionRecord = new OptionRecord(user.getCurrentLessonId(), progress, sound, bitmaps, progress);
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
-            Log.d(TAG, "does this repeat?");
 
             return optionRecord;
         }

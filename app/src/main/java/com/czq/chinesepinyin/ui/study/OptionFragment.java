@@ -52,7 +52,6 @@ public class OptionFragment extends Fragment {
 
     private NavController controller;
     private OptionViewModel optionViewModel;
-    private TextView textView;
 
     @Nullable
     @Override

@@ -11,7 +11,6 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 
-import com.czq.chinesepinyin.BaseActivity;
 import com.czq.chinesepinyin.R;
 
 /**

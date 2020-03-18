@@ -49,4 +49,11 @@ public interface UserDao {
      */
     @Query("SELECT * FROM user LIMIT 1")
     LiveData<User> selectUser();
+
+    /**
+     *
+     * @return
+     */
+    @Query("SELECT * FROM user LIMIT 1")
+    User getUser();
 }

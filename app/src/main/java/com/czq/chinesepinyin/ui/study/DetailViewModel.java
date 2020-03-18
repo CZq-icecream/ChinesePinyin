@@ -21,6 +21,7 @@ public class DetailViewModel extends AndroidViewModel {
     private DetailRecordRepository detailRecordRepository;
     private LiveData<DetailRecord> detailRecordLiveData;
 
+
     public DetailViewModel(@NonNull Application application) {
         super(application);
 

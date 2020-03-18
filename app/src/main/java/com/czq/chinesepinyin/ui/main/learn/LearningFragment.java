@@ -58,9 +58,7 @@ public class LearningFragment extends Fragment {
      */
     private void initView(View view) {
         learningDay = view.findViewById(R.id.learning_day);
-
         textProgress = view.findViewById(R.id.text_progress);
-
         progressBar = view.findViewById(R.id.progress);
         //设置进度条
         setProgressBar();

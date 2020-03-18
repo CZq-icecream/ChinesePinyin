@@ -1,4 +1,4 @@
-package com.czq.chinesepinyin.impl;
+package com.czq.chinesepinyin.service.impl;
 
 import android.app.Application;
 import android.content.res.AssetManager;
@@ -65,7 +65,7 @@ public class DetailRecordServiceImpl implements DetailRecordService {
         protected Void doInBackground(Void... voids) {
             //查询用户信息
             UserDao userDao = userDatabase.userDao();
-            User user = userDao.selectUser().getValue();
+            User user = userDao.getUser();
             //查询当前课程id
             int currentLessonId = user.getCurrentLessonId();
             //查询当前课程信息

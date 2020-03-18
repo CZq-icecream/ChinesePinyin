@@ -5,7 +5,7 @@ import android.app.Application;
 import androidx.lifecycle.LiveData;
 
 import com.czq.chinesepinyin.entity.OptionRecord;
-import com.czq.chinesepinyin.impl.OptionRecordServiceImpl;
+import com.czq.chinesepinyin.service.impl.OptionRecordServiceImpl;
 import com.czq.chinesepinyin.service.OptionRecordService;
 
 /**

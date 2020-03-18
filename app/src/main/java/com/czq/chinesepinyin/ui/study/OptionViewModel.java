@@ -8,7 +8,6 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
 import com.czq.chinesepinyin.entity.OptionRecord;
-import com.czq.chinesepinyin.impl.OptionRecordServiceImpl;
 import com.czq.chinesepinyin.repository.OptionRecordRepository;
 
 /**

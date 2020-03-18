@@ -19,13 +19,12 @@ public class LearningViewModel extends AndroidViewModel {
 
     private static final String TAG = "LearningViewModel";
 
-    private LiveData<User> userLiveData;
-
-    public LiveData<Integer> liveData = new MutableLiveData<>(1);
+    private UserRepository userRepository;
+    private LiveData<User> userLiveData = null;
 
     public LearningViewModel(@NonNull Application application) {
         super(application);
-        UserRepository userRepository = new UserRepository(application);
+        userRepository = new UserRepository(application);
         userLiveData = userRepository.selectUser();
     }
 
