@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!--    optionFragment页面按钮点击后的样式-->
-    <solid android:color="@color/colorImageButtonClick"/>
+    <solid android:color="@color/lightgray"/>
     <corners
         android:topLeftRadius="10dip"
         android:topRightRadius="10dip"
