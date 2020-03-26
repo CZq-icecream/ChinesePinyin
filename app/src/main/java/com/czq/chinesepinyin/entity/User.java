@@ -18,9 +18,9 @@ public class User {
     /**
      * 主键
      */
-    @PrimaryKey(autoGenerate = true)
+    @PrimaryKey
     @ColumnInfo(name = "id")
-    private Integer id;
+    private String uuid;
     /**
      * 用户名
      */
@@ -57,11 +57,16 @@ public class User {
      */
     @ColumnInfo(name = "current_lesson_id", defaultValue = "1")
     private Integer currentLessonId;
+    /**
+     * 用户头像路径
+     */
+    @ColumnInfo(name = "profile_path", defaultValue = "")
+    private String profilePath;
 
     @Override
     public String toString() {
         return "User{" +
-                "id=" + id +
+                "uuid='" + uuid + '\'' +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", learningDays=" + learningDays +
@@ -69,10 +74,12 @@ public class User {
                 ", gainToday=" + gainToday +
                 ", totalXP=" + totalXP +
                 ", currentLessonId=" + currentLessonId +
+                ", profilePath='" + profilePath + '\'' +
                 '}';
     }
 
-    public User(String username, String password, Integer learningDays, Integer dailyGoal, Integer gainToday, Integer totalXP, Integer currentLessonId) {
+    public User(String uuid, String username, String password, Integer learningDays, Integer dailyGoal, Integer gainToday, Integer totalXP, Integer currentLessonId, String profilePath) {
+        this.uuid = uuid;
         this.username = username;
         this.password = password;
         this.learningDays = learningDays;
@@ -80,14 +87,15 @@ public class User {
         this.gainToday = gainToday;
         this.totalXP = totalXP;
         this.currentLessonId = currentLessonId;
+        this.profilePath = profilePath;
     }
 
-    public Integer getId() {
-        return id;
+    public String getUuid() {
+        return uuid;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
     }
 
     public String getUsername() {
@@ -144,5 +152,13 @@ public class User {
 
     public void setCurrentLessonId(Integer currentLessonId) {
         this.currentLessonId = currentLessonId;
+    }
+
+    public String getProfilePath() {
+        return profilePath;
+    }
+
+    public void setProfilePath(String profilePath) {
+        this.profilePath = profilePath;
     }
 }

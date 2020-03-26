@@ -57,7 +57,7 @@ public abstract class UserDatabase extends RoomDatabase {
                 public void run() {
                     UserDao userDao = userDatabase.userDao();
                     userDao.deleteAll();
-                    User user = new User("user", "pass", 14, 25, 15, 10, 1);
+                    User user = new User("442a3c31665e45c3a7c4ae132fed923a", "czq", "123456", 14, 25, 15, 10, 1, "");
                     userDao.insertUser(user);
                 }
             });

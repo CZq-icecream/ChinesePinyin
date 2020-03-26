@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
 import android.graphics.Point;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
@@ -26,16 +27,20 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 
+import com.bumptech.glide.Glide;
 import com.czq.chinesepinyin.R;
 import com.czq.chinesepinyin.dao.HistoryLessonDao;
 import com.czq.chinesepinyin.dao.UserDao;
 import com.czq.chinesepinyin.database.HistoryLessonDatabase;
 import com.czq.chinesepinyin.database.UserDatabase;
-import com.czq.chinesepinyin.entity.DetailRecord;
+import com.czq.chinesepinyin.entity.Detail;
 import com.czq.chinesepinyin.entity.HistoryLesson;
 import com.czq.chinesepinyin.entity.User;
+
+import java.io.IOException;
 
 /**
  * 答题后的细节界面
@@ -50,11 +55,12 @@ public class DetailFragment extends Fragment {
     private NavController controller;
 
     private ImageView back;
-    private ImageButton chineseImageButton;
+    private ImageView chineseImageView;
     private ImageView chineseIllustrationImageView;
     private ImageView chineseMeaningImageView;
     private VideoView videoView;
     private Button nextButton;
+    private MediaPlayer mediaPlayer;
 
     @Nullable
     @Override
@@ -62,7 +68,6 @@ public class DetailFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_detail, container, false);
 
         controller = NavHostFragment.findNavController(this);
-
         detailViewModel = ViewModelProviders.of(this).get(DetailViewModel.class);
 
         //因为控件的设置涉及宽和高，所以需要等计算结束之后才将图片绘制到控件上
@@ -81,84 +86,126 @@ public class DetailFragment extends Fragment {
 
     private void init(View view, NavController controller){
         back = view.findViewById(R.id.back);
-        chineseImageButton = view.findViewById(R.id.chinese);
+        chineseImageView = view.findViewById(R.id.chinese);
         chineseIllustrationImageView = view.findViewById(R.id.chinese_illustration);
         chineseMeaningImageView = view.findViewById(R.id.chinese_meaning);
         videoView = view.findViewById(R.id.video);
         nextButton = view.findViewById(R.id.next);
     }
 
-
-    private void subscribe(DetailViewModel detailViewModel, NavController controller) {
-
-        detailViewModel.getDetailRecordLiveData().observe(this, new Observer<DetailRecord>() {
+    public void subscribe(DetailViewModel detailViewModel, NavController controller) {
+        detailViewModel.getDetailLiveData().observe(this, new Observer<Detail>() {
             @Override
-            public void onChanged(DetailRecord detailRecord) {
-                //获取屏幕的宽和高
-                //https://blog.csdn.net/noige/article/details/79225833
-                Display display = getActivity().getWindowManager().getDefaultDisplay();
-                Point size = new Point();
-                display.getSize(size);
-                int width = size.x;
-                int height = size.y;
-
-                detailViewModel.getDetailRecordLiveData().observe(DetailFragment.this, new Observer<DetailRecord>() {
+            public void onChanged(Detail detail) {
+                Glide.with(DetailFragment.this).load(detail.getChinesePath()).into(chineseImageView);
+                Glide.with(DetailFragment.this).load(detail.getIllustrationPath()).into(chineseIllustrationImageView);
+                Glide.with(DetailFragment.this).load(detail.getMeaningPath()).into(chineseMeaningImageView);
+                chineseImageView.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onChanged(DetailRecord detailRecord) {
-                        chineseImageButton.setImageBitmap(getScaleBitmap(detailRecord.getChinese(), width / 3, height / 5));
-                        chineseImageButton.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                detailRecord.getSound().play();
+                    public void onClick(View v) {
+                        if (mediaPlayer == null) {
+                            mediaPlayer = new MediaPlayer();
+                            mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+                            try {
+                                mediaPlayer.setDataSource(detail.getAudioPath());
+                                mediaPlayer.prepare();
+                            } catch (IOException e) {
+                                e.printStackTrace();
                             }
-                        });
-                        chineseIllustrationImageView.setImageBitmap(getScaleBitmap(detailRecord.getIllustration(), width * 2 / 3, height / 4));
-                        chineseMeaningImageView.setImageBitmap(getScaleBitmap(detailRecord.getChineseMeaning(), width * 2 / 3, height / 6));
+                            mediaPlayer.start();
+                        }else {
+                            mediaPlayer.start();
+                        }
                     }
                 });
-
                 nextButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        updateProgress();
+                        if (mediaPlayer != null) {
+                            mediaPlayer.release();
+                            mediaPlayer = null;
+                        }
                         controller.navigate(R.id.action_detailFragment_to_optionFragment);
                     }
                 });
             }
         });
-
-        String rawPath = "android.resource://" + getActivity().getPackageName() + "/" + R.raw.a;
-        videoView.setVideoPath(rawPath);
-        videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-            @Override
-            public void onPrepared(MediaPlayer mp) {
-                Log.d(TAG, "onPrepared");
-            }
-        });
-        videoView.setVideoURI(Uri.parse(rawPath));
-        videoView.setMediaController(new MediaController(getContext()));
-        videoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-            @Override
-            public void onCompletion(MediaPlayer mp) {
-                Log.d(TAG, "onCompletion");
-            }
-        });
-        videoView.setOnErrorListener(new MediaPlayer.OnErrorListener() {
-            @Override
-            public boolean onError(MediaPlayer mp, int what, int extra) {
-                Log.d(TAG, "onError");
-                return false;
-            }
-        });
-        videoView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                videoView.start();
-            }
-        });
-//                videoView.start();
-        Log.d(TAG, getActivity().getPackageName());
     }
+
+
+//    private void subscribe(DetailViewModel detailViewModel, NavController controller) {
+//
+//        detailViewModel.getDetailRecordLiveData().observe(this, new Observer<DetailRecord>() {
+//            @Override
+//            public void onChanged(DetailRecord detailRecord) {
+//                //获取屏幕的宽和高
+//                //https://blog.csdn.net/noige/article/details/79225833
+//                Display display = getActivity().getWindowManager().getDefaultDisplay();
+//                Point size = new Point();
+//                display.getSize(size);
+//                int width = size.x;
+//                int height = size.y;
+//
+//                detailViewModel.getDetailRecordLiveData().observe(DetailFragment.this, new Observer<DetailRecord>() {
+//                    @Override
+//                    public void onChanged(DetailRecord detailRecord) {
+//                        chineseImageButton.setImageBitmap(getScaleBitmap(detailRecord.getChinese(), width / 3, height / 5));
+//                        chineseImageButton.setOnClickListener(new View.OnClickListener() {
+//                            @Override
+//                            public void onClick(View v) {
+//                                detailRecord.getSound().play();
+//                            }
+//                        });
+//                        chineseIllustrationImageView.setImageBitmap(getScaleBitmap(detailRecord.getIllustration(), width * 2 / 3, height / 4));
+//                        chineseMeaningImageView.setImageBitmap(getScaleBitmap(detailRecord.getChineseMeaning(), width * 2 / 3, height / 6));
+//                    }
+//                });
+//
+//                nextButton.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        updateProgress();
+//                        controller.navigate(R.id.action_detailFragment_to_optionFragment);
+//                    }
+//                });
+//            }
+//        });
+//
+//        String rawPath = "android.resource://" + getActivity().getPackageName() + "/" + R.raw.a;
+//        videoView.setVideoPath(rawPath);
+//        videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+//            @Override
+//            public void onPrepared(MediaPlayer mp) {
+//                Log.d(TAG, "onPrepared");
+//            }
+//        });
+//        videoView.setVideoURI(Uri.parse(rawPath));
+//        videoView.setMediaController(new MediaController(getContext()));
+//        videoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+//            @Override
+//            public void onCompletion(MediaPlayer mp) {
+//                Log.d(TAG, "onCompletion");
+//            }
+//        });
+//        videoView.setOnErrorListener(new MediaPlayer.OnErrorListener() {
+//            @Override
+//            public boolean onError(MediaPlayer mp, int what, int extra) {
+//                Log.d(TAG, "onError");
+//                return false;
+//            }
+//        });
+//        videoView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                videoView.start();
+//            }
+//        });
+////                videoView.start();
+//        Log.d(TAG, getActivity().getPackageName());
+//    }
+
+
+
 
     /**
      * 按下next按钮之后更新课程的进度

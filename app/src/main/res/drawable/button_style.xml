@@ -1,33 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:state_pressed="true">
-        <shape>
-            <!--    optionFragment页面按钮点击后的样式-->
-            <solid android:color="@color/lightgray"/>
-            <corners
-                android:topLeftRadius="10dip"
-                android:topRightRadius="10dip"
-                android:bottomLeftRadius="10dip"
-                android:bottomRightRadius="10dip"
-                />
-        </shape>
-    </item>
-    <item android:state_focused="true">
-        <shape>
-            <!--    optionFragment页面按钮点击后的样式-->
-            <solid android:color="@color/lightgray"/>
-            <corners
-                android:topLeftRadius="10dip"
-                android:topRightRadius="10dip"
-                android:bottomLeftRadius="10dip"
-                android:bottomRightRadius="10dip"
-                />
-        </shape>
-    </item>
+<!--登录界面的按钮样式-->
+
     <item android:state_pressed="false">
         <shape>
-            <!--    optionFragment页面按钮点击前的样式-->
-            <solid android:color="@color/floralwhite"/>
+            <solid android:color="@color/gainsboro"/>
             <corners
                 android:topLeftRadius="10dip"
                 android:topRightRadius="10dip"
@@ -36,4 +13,29 @@
                 />
         </shape>
     </item>
+
+    <item android:state_focused="true">
+        <shape>
+            <solid android:color="@color/skyblue"/>
+            <corners
+                android:topLeftRadius="10dip"
+                android:topRightRadius="10dip"
+                android:bottomLeftRadius="10dip"
+                android:bottomRightRadius="10dip"
+                />
+        </shape>
+    </item>
+
+    <item android:state_pressed="true">
+        <shape>
+            <solid android:color="@color/skyblue"/>
+            <corners
+                android:topLeftRadius="10dip"
+                android:topRightRadius="10dip"
+                android:bottomLeftRadius="10dip"
+                android:bottomRightRadius="10dip"
+                />
+        </shape>
+    </item>
+
 </selector>

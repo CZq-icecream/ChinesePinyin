@@ -9,6 +9,8 @@ import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.media.AudioAttributes;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.SoundPool;
 import android.os.Bundle;
@@ -29,9 +31,11 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 
+import com.bumptech.glide.Glide;
 import com.czq.chinesepinyin.R;
-import com.czq.chinesepinyin.entity.OptionRecord;
-import com.czq.chinesepinyin.entity.Sound;
+import com.czq.chinesepinyin.entity.Option;
+
+import java.io.IOException;
 
 /**
  * 学习界面的Fragment
@@ -49,6 +53,18 @@ public class OptionFragment extends Fragment {
     private ImageButton option2;
     private ImageButton option3;
     private ImageButton option4;
+    private MediaPlayer mediaPlayer;
+
+    private View.OnClickListener onClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            if (mediaPlayer != null) {
+                mediaPlayer.release();
+                mediaPlayer = null;
+            }
+            controller.navigate(R.id.action_optionFragment_to_detailFragment);
+        }
+    };
 
     private NavController controller;
     private OptionViewModel optionViewModel;
@@ -82,54 +98,47 @@ public class OptionFragment extends Fragment {
 
     /**
      * 订阅更新
-     * 这里需要等待图片加载出来才能进行点击（用asset模拟时，加载数据的时间过长，点击之后会有异常，所以在这里为ImageButton设置监听）
+     * 等到资源加载完成之后才设置监听事件
      * @param optionViewModel
+     * @param controller
      */
     private void subscribe(OptionViewModel optionViewModel, NavController controller) {
-        optionViewModel.getOptionRecordLiveData().observe(this, new Observer<OptionRecord>() {
+        optionViewModel.getOption().observe(this, new Observer<Option>() {
             @Override
-            public void onChanged(OptionRecord optionRecord) {
+            public void onChanged(Option option) {
+                String[] choicePicPath = option.getChoicePath();
+                Glide.with(OptionFragment.this).load(choicePicPath[0]).into(option1);
+                Glide.with(OptionFragment.this).load(choicePicPath[1]).into(option2);
+                Glide.with(OptionFragment.this).load(choicePicPath[2]).into(option3);
+                Glide.with(OptionFragment.this).load(choicePicPath[3]).into(option4);
+                option1.setOnClickListener(onClickListener);
+                option2.setOnClickListener(onClickListener);
+                option3.setOnClickListener(onClickListener);
+                option4.setOnClickListener(onClickListener);
+
                 voice.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Sound sound = optionRecord.getSound();
-                        sound.play();
-                    }
-                });
-
-                option1.setImageBitmap(getScaleBitmap(option1, optionRecord.getBitmaps()[0]));
-                option2.setImageBitmap(getScaleBitmap(option2, optionRecord.getBitmaps()[1]));
-                option3.setImageBitmap(getScaleBitmap(option3, optionRecord.getBitmaps()[2]));
-                option4.setImageBitmap(getScaleBitmap(option4, optionRecord.getBitmaps()[3]));
-                //TODO 4 点击过快时声音资源还未加载好
-
-                option1.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        controller.navigate(R.id.action_optionFragment_to_detailFragment);
-                    }
-                });
-                option2.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        controller.navigate(R.id.action_optionFragment_to_detailFragment);
-                    }
-                });
-                option3.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        controller.navigate(R.id.action_optionFragment_to_detailFragment);
-                    }
-                });
-                option4.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        controller.navigate(R.id.action_optionFragment_to_detailFragment);
+                        if (mediaPlayer == null) {
+                            mediaPlayer = new MediaPlayer();
+                            mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+                            try {
+                                mediaPlayer.setDataSource(option.getAudioPath());
+                                Log.d(TAG, option.getAudioPath());
+                                mediaPlayer.prepare();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                            mediaPlayer.start();
+                        }else{
+                            mediaPlayer.start();
+                        }
                     }
                 });
             }
         });
     }
+
 
     /**
      * 对Bitmap进行缩放，使图片适应ImageButton的大小

@@ -18,7 +18,7 @@
         android:title="@string/nav_bottom_main_immerse"/>
 
     <item
-        android:id="@+id/navigation_user_fragment"
+        android:id="@+id/user_profile"
         android:icon="@drawable/ic_user"
         android:title="@string/nav_bottom_main_user"/>
 

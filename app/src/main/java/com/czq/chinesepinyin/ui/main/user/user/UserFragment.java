@@ -1,4 +1,4 @@
-package com.czq.chinesepinyin.ui.main.user;
+package com.czq.chinesepinyin.ui.main.user.user;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -22,7 +22,6 @@ public class UserFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_user, container, false);
-
         return view;
     }
 }

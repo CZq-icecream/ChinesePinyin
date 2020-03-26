@@ -21,9 +21,22 @@
         android:name="com.czq.chinesepinyin.ui.main.immerse.ImmerseFragment"
         tools:layout="@layout/fragment_immerse"/>
 
-    <fragment
-        android:id="@+id/navigation_user_fragment"
-        android:name="com.czq.chinesepinyin.ui.main.user.UserFragment"
-        tools:layout="@layout/fragment_user"/>
+<!--    根据用户状态不同导航的不同界面-->
+    <navigation
+        android:id="@+id/user_profile"
+        app:startDestination="@id/navigation_profile_fragment">
+
+        <fragment
+            android:id="@+id/navigation_profile_fragment"
+            android:name="com.czq.chinesepinyin.ui.main.user.ProfileFragment"
+            tools:layout="@layout/fragment_profile"
+            />
+        <fragment
+            android:id="@+id/navigation_user_fragment"
+            android:name="com.czq.chinesepinyin.ui.main.user.user.UserFragment"
+            tools:layout="@layout/fragment_user"/>
+
+    </navigation>
+
 
 </navigation>

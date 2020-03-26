@@ -28,7 +28,7 @@ public class StudyActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_study);
         //获取NavController
-        NavController controller = Navigation.findNavController(this, R.id.nav_host_fragment);
+//        NavController controller = Navigation.findNavController(this, R.id.nav_host_fragment);
     }
 
     @Override

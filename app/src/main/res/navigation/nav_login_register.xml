@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_login_register"
+    app:startDestination="@id/navigation_login_fragment">
+
+    <fragment
+        android:id="@+id/navigation_login_fragment"
+        android:name="com.czq.chinesepinyin.ui.login_register.login.LoginFragment"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login">
+
+        <action
+            android:id="@+id/action_loginFragment_to_registerFragment"
+            app:destination="@id/navigation_register_fragment"
+            app:popUpTo="@id/navigation_register_fragment"
+            app:popUpToInclusive="true"
+            />
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/navigation_register_fragment"
+        android:name="com.czq.chinesepinyin.ui.login_register.register.RegisterFragment"
+        android:label="fragment_register"
+        tools:layout="@layout/fragment_register">
+        <action
+            android:id="@+id/action_registerFragment_to_loginFragment"
+            app:destination="@id/navigation_login_fragment"
+            app:popUpTo="@id/navigation_login_fragment"
+            app:popUpToInclusive="true"
+            />
+    </fragment>
+
+
+</navigation>

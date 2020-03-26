@@ -36,6 +36,14 @@ public class HistoryLesson {
         this.progress = progress;
     }
 
+    @Override
+    public String toString() {
+        return "HistoryLesson{" +
+                "lessonId=" + lessonId +
+                ", progress=" + progress +
+                '}';
+    }
+
     public Integer getLessonId() {
         return lessonId;
     }
