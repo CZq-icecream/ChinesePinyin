@@ -71,13 +71,12 @@ public class LearningFragment extends Fragment {
                 startActivity(intent);
             }
         });
-
     }
 
     /**
      * 设置进度条
      */
-    private void setProgressBar() {
+    private void setProgressBar(){
         Display display = getActivity().getWindowManager().getDefaultDisplay();
         Point size = new Point();
         display.getSize(size);

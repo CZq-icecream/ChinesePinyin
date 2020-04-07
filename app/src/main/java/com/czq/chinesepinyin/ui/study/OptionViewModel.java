@@ -12,6 +12,7 @@ import com.czq.chinesepinyin.R;
 import com.czq.chinesepinyin.entity.Option;
 import com.czq.chinesepinyin.repository.OptionRepository;
 import com.czq.chinesepinyin.util.Cache;
+import com.czq.chinesepinyin.util.Constant;
 
 
 /**
@@ -32,6 +33,8 @@ public class OptionViewModel extends AndroidViewModel {
 
 
     public LiveData<Option> getOption(){
-        return optionRepository.getOption(1, 1);
+        int lessonId = (int) cache.get(Constant.getCurrentLessonId());
+        int progress = (int) cache.get(Constant.getCurrentLessonProgress());
+        return optionRepository.getOption(lessonId, progress);
     }
 }

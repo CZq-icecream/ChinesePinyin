@@ -39,6 +39,13 @@ import com.czq.chinesepinyin.database.UserDatabase;
 import com.czq.chinesepinyin.entity.Detail;
 import com.czq.chinesepinyin.entity.HistoryLesson;
 import com.czq.chinesepinyin.entity.User;
+import com.google.android.exoplayer2.ExoPlayerFactory;
+import com.google.android.exoplayer2.SimpleExoPlayer;
+import com.google.android.exoplayer2.source.MediaSource;
+import com.google.android.exoplayer2.source.ProgressiveMediaSource;
+import com.google.android.exoplayer2.ui.PlayerView;
+import com.google.android.exoplayer2.upstream.DataSource;
+import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 
 import java.io.IOException;
 
@@ -58,9 +65,15 @@ public class DetailFragment extends Fragment {
     private ImageView chineseImageView;
     private ImageView chineseIllustrationImageView;
     private ImageView chineseMeaningImageView;
-    private VideoView videoView;
     private Button nextButton;
     private MediaPlayer mediaPlayer;
+
+    private PlayerView playerView;
+    private SimpleExoPlayer player;
+
+    private boolean playWhenReady = false;
+    private int currentWindow = 0;
+    private long playbackPosition = 0;
 
     @Nullable
     @Override
@@ -82,14 +95,12 @@ public class DetailFragment extends Fragment {
         return view;
     }
 
-
-
     private void init(View view, NavController controller){
         back = view.findViewById(R.id.back);
         chineseImageView = view.findViewById(R.id.chinese);
         chineseIllustrationImageView = view.findViewById(R.id.chinese_illustration);
         chineseMeaningImageView = view.findViewById(R.id.chinese_meaning);
-        videoView = view.findViewById(R.id.video);
+        playerView = view.findViewById(R.id.vedio_view);
         nextButton = view.findViewById(R.id.next);
     }
 
@@ -102,14 +113,14 @@ public class DetailFragment extends Fragment {
                 Glide.with(DetailFragment.this).load(detail.getMeaningPath()).into(chineseMeaningImageView);
                 chineseImageView.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onClick(View v) {
-                        if (mediaPlayer == null) {
+                    public void onClick(View v){
+                        if (mediaPlayer == null){
                             mediaPlayer = new MediaPlayer();
                             mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
                             try {
                                 mediaPlayer.setDataSource(detail.getAudioPath());
                                 mediaPlayer.prepare();
-                            } catch (IOException e) {
+                            } catch (IOException e){
                                 e.printStackTrace();
                             }
                             mediaPlayer.start();
@@ -118,13 +129,21 @@ public class DetailFragment extends Fragment {
                         }
                     }
                 });
+
+                initializePlayer();
+
                 nextButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        //释放音频资源
                         if (mediaPlayer != null) {
                             mediaPlayer.release();
                             mediaPlayer = null;
                         }
+
+                        //更新学习进度
+                        detailViewModel.updateProgress();
+                        //转到下一题
                         controller.navigate(R.id.action_detailFragment_to_optionFragment);
                     }
                 });
@@ -132,100 +151,26 @@ public class DetailFragment extends Fragment {
         });
     }
 
-
-//    private void subscribe(DetailViewModel detailViewModel, NavController controller) {
-//
-//        detailViewModel.getDetailRecordLiveData().observe(this, new Observer<DetailRecord>() {
-//            @Override
-//            public void onChanged(DetailRecord detailRecord) {
-//                //获取屏幕的宽和高
-//                //https://blog.csdn.net/noige/article/details/79225833
-//                Display display = getActivity().getWindowManager().getDefaultDisplay();
-//                Point size = new Point();
-//                display.getSize(size);
-//                int width = size.x;
-//                int height = size.y;
-//
-//                detailViewModel.getDetailRecordLiveData().observe(DetailFragment.this, new Observer<DetailRecord>() {
-//                    @Override
-//                    public void onChanged(DetailRecord detailRecord) {
-//                        chineseImageButton.setImageBitmap(getScaleBitmap(detailRecord.getChinese(), width / 3, height / 5));
-//                        chineseImageButton.setOnClickListener(new View.OnClickListener() {
-//                            @Override
-//                            public void onClick(View v) {
-//                                detailRecord.getSound().play();
-//                            }
-//                        });
-//                        chineseIllustrationImageView.setImageBitmap(getScaleBitmap(detailRecord.getIllustration(), width * 2 / 3, height / 4));
-//                        chineseMeaningImageView.setImageBitmap(getScaleBitmap(detailRecord.getChineseMeaning(), width * 2 / 3, height / 6));
-//                    }
-//                });
-//
-//                nextButton.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        updateProgress();
-//                        controller.navigate(R.id.action_detailFragment_to_optionFragment);
-//                    }
-//                });
-//            }
-//        });
-//
-//        String rawPath = "android.resource://" + getActivity().getPackageName() + "/" + R.raw.a;
-//        videoView.setVideoPath(rawPath);
-//        videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-//            @Override
-//            public void onPrepared(MediaPlayer mp) {
-//                Log.d(TAG, "onPrepared");
-//            }
-//        });
-//        videoView.setVideoURI(Uri.parse(rawPath));
-//        videoView.setMediaController(new MediaController(getContext()));
-//        videoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-//            @Override
-//            public void onCompletion(MediaPlayer mp) {
-//                Log.d(TAG, "onCompletion");
-//            }
-//        });
-//        videoView.setOnErrorListener(new MediaPlayer.OnErrorListener() {
-//            @Override
-//            public boolean onError(MediaPlayer mp, int what, int extra) {
-//                Log.d(TAG, "onError");
-//                return false;
-//            }
-//        });
-//        videoView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                videoView.start();
-//            }
-//        });
-////                videoView.start();
-//        Log.d(TAG, getActivity().getPackageName());
-//    }
-
-
-
-
-    /**
-     * 按下next按钮之后更新课程的进度
-     */
-    private void updateProgress(){
-        UserDatabase userDatabase = UserDatabase.getUserDatabase(getContext());
-        UserDao userDao = userDatabase.userDao();
-        HistoryLessonDatabase historyLessonDatabase = HistoryLessonDatabase.getHistoryLessonDatabase(getContext());
-        HistoryLessonDao historyLessonDao = historyLessonDatabase.historyLessonDao();
-        UserDatabase.databaseWriteExecutor.execute(new Runnable() {
-            @Override
-            public void run() {
-                User user = userDao.getUser();
-                int lessonId = user.getCurrentLessonId();
-                HistoryLesson historyLesson = historyLessonDao.selectHistoryLesson(lessonId);
-                int progress = historyLesson.getProgress();
-                historyLessonDao.updateProgress(lessonId, progress + 1);
-            }
-        });
+    private void initializePlayer(){
+        player = ExoPlayerFactory.newSimpleInstance(getActivity().getApplicationContext());
+        playerView.setPlayer(player);
+        Uri uri = Uri.parse("http://192.168.43.42:8080/chinesepinyin/video/1/1");
+        DataSource.Factory dataSourceFactor =
+                new DefaultDataSourceFactory(getActivity(), "exoplayer");
+        MediaSource mediaSource = new ProgressiveMediaSource.Factory(dataSourceFactor)
+                .createMediaSource(uri);
+        player.setPlayWhenReady(playWhenReady);
+        player.seekTo(currentWindow, playbackPosition);
+        player.prepare(mediaSource, false, false);
     }
+
+    private void releasePlayer(){
+        if (player != null) {
+            player.release();
+            player = null;
+        }
+    }
+
 
     @Override
     public void onResume() {

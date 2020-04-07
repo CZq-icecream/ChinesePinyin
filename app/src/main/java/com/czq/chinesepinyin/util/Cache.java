@@ -33,11 +33,11 @@ public class Cache {
         return instance;
     }
 
-    public static void put(String key, Object value) {
+    public void put(String key, Object value) {
         cache.put(key, value);
     }
 
-    public static Object get(String key) {
+    public Object get(String key) {
         return cache.get(key);
     }
 }

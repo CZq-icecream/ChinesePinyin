@@ -5,6 +5,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 
@@ -14,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.czq.chinesepinyin.R;
+import com.czq.chinesepinyin.util.AuthenticationState;
 import com.google.android.material.textfield.TextInputEditText;
 
 /**
@@ -23,7 +26,7 @@ import com.google.android.material.textfield.TextInputEditText;
 public class RegisterFragment extends Fragment {
 
     private NavController controller;
-
+    private RegisterViewModel registerViewModel;
     private TextInputEditText usernameEditText;
     private TextInputEditText passwordEditText;
     private TextInputEditText passwordConfirmEditText;
@@ -34,14 +37,14 @@ public class RegisterFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_register, container, false);
-
+        controller = NavHostFragment.findNavController(this);
+        registerViewModel = ViewModelProviders.of(this).get(RegisterViewModel.class);
         initView(view);
+        subscribe();
         return view;
     }
 
     private void initView(View view) {
-        controller = NavHostFragment.findNavController(this);
-
         usernameEditText = view.findViewById(R.id.username);
         passwordEditText = view.findViewById(R.id.password);
         passwordConfirmEditText = view.findViewById(R.id.password_confirm);
@@ -87,6 +90,9 @@ public class RegisterFragment extends Fragment {
                     return;
                 }
                 //提交表单请求
+                registerViewModel.register(usernameEditText.getText().toString(),
+                        passwordEditText.getText().toString());
+
             }
         });
 
@@ -95,6 +101,18 @@ public class RegisterFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 controller.navigate(R.id.navigation_login_fragment);
+            }
+        });
+    }
+
+    private void subscribe(){
+        registerViewModel.getAuthenticationStateLiveData().observe(this, new Observer<AuthenticationState>() {
+            @Override
+            public void onChanged(AuthenticationState authenticationState) {
+                //注册成功之后自动登录，跳转到用户界面
+                if (authenticationState == AuthenticationState.AUTHENTICATED) {
+                    getActivity().finish();
+                }
             }
         });
     }

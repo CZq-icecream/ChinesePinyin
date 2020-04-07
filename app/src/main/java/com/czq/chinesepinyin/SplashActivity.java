@@ -1,14 +1,16 @@
 package com.czq.chinesepinyin;
 
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
-import com.czq.chinesepinyin.dao.UserDao;
-import com.czq.chinesepinyin.database.UserDatabase;
+import com.czq.chinesepinyin.repository.UserRepository;
 import com.czq.chinesepinyin.ui.main.MainActivity;
+import com.czq.chinesepinyin.util.Cache;
 import com.czq.chinesepinyin.util.CircleProgressbar;
 
 /**
@@ -22,16 +24,18 @@ public class SplashActivity extends AppCompatActivity {
 
     private CircleProgressbar circleProgressbar;
 
-    private UserDatabase userDatabase;
+    private static UserRepository userRepository;
+    private static Cache cache;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-        userDatabase = UserDatabase.getUserDatabase(getApplicationContext());
+        userRepository = new UserRepository(getApplication());
+        cache = Cache.getInstance(getApplicationContext());
         //启动任务
-//        new SplashTask().execute();
+        new SplashTask().execute();
     }
 
     @Override
@@ -56,7 +60,6 @@ public class SplashActivity extends AppCompatActivity {
     }
 
 
-
     private void startActivity(){
         Intent intent = new Intent(SplashActivity.this, MainActivity.class);
         finish();   //需要结束该页面，否则点击返回又来到该页面
@@ -66,18 +69,26 @@ public class SplashActivity extends AppCompatActivity {
     /**
      * 在Splash界面初始化一些数据
      */
-//    private static class SplashTask extends AsyncTask<Void, Void, Void> {
-//
-//        @Override
-//        protected Void doInBackground(Void... voids) {
-//
-//
-//            return null;
-//        }
-//    }
+    private static class SplashTask extends AsyncTask<Void, Void, Void> {
 
-    private void splashTask(){
+        private static final String TAG = "SplashTask";
 
+        @Override
+        protected Void doInBackground(Void... voids) {
+            //初始化工作
+            //如果有用户信息：
+            //  1. 进行登录验证
+            //  2. 获取课程信息
+            userRepository.splashLogin();
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            Log.d(TAG, "Splash onPostExecute");
+        }
     }
+
 }
 

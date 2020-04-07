@@ -14,6 +14,8 @@
     <string name="learning_fragment_practice">Practice</string>
 
     <!--    UserFragment界面的字符串-->
+    <string name="user_fragment_days_learning">%d\nDays Learning</string>
+    <string name="user_fragment_total_xp">%dXP\nTotal XP</string>
     <string name="user_fragment_daily_goal">Daily Goal</string>
     <string name="user_fragment_lesson">Lesson</string>
     <string name="user_fragment_reminder">Reminder</string>

@@ -18,12 +18,12 @@ import java.util.jar.Attributes;
 public interface HistoryLessonDao {
 
 
-    /**
-     * 根据课程id查询历史课程信息
-     * @return
-     */
-    @Query("SELECT * FROM history_lesson WHERE lesson_id = :lessonId")
-    HistoryLesson selectHistoryLesson(Integer lessonId);
+//    /**
+//     * 根据课程id查询历史课程信息
+//     * @return
+//     */
+//    @Query("SELECT * FROM history_lesson WHERE lesson_id = :lessonId")
+//    HistoryLesson selectHistoryLesson(Integer lessonId);
 
     /**
      * 删除该表的记录
@@ -31,18 +31,22 @@ public interface HistoryLessonDao {
     @Query("DELETE FROM history_lesson")
     void deleteAll();
 
-    /**
-     * 插入一条记录
-     * @param historyLesson
-     */
     @Insert(onConflict = OnConflictStrategy.ABORT)
-    void insertHistoryLesson(HistoryLesson historyLesson);
+    void insert(HistoryLesson historyLesson);
 
-    /**
-     * 更新用户学习进度
-     * @param lessonId
-     * @param progress
-     */
-    @Query("UPDATE history_lesson SET progress = :progress WHERE lesson_id = :lessonId")
-    void updateProgress(Integer lessonId, int progress);
+
+//    /**
+//     * 插入一条记录
+//     * @param historyLesson
+//     */
+//    @Insert(onConflict = OnConflictStrategy.ABORT)
+//    void insertHistoryLesson(HistoryLesson historyLesson);
+//
+//    /**
+//     * 更新用户学习进度
+//     * @param lessonId
+//     * @param progress
+//     */
+//    @Query("UPDATE history_lesson SET progress = :progress WHERE lesson_id = :lessonId")
+//    void updateProgress(Integer lessonId, int progress);
 }

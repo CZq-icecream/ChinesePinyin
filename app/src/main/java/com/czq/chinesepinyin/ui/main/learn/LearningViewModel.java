@@ -22,7 +22,7 @@ public class LearningViewModel extends AndroidViewModel {
     private UserRepository userRepository;
     private LiveData<User> userLiveData = null;
 
-    public LearningViewModel(@NonNull Application application) {
+    public LearningViewModel(@NonNull Application application){
         super(application);
         userRepository = new UserRepository(application);
         userLiveData = userRepository.selectUser();
@@ -31,5 +31,4 @@ public class LearningViewModel extends AndroidViewModel {
     public LiveData<User> getUserLiveData(){
         return userLiveData;
     }
-
 }

@@ -16,7 +16,7 @@ public class LoginRegisterActivity extends AppCompatActivity {
 
     private static final String TAG = "LoginRegisterActivity";
 
-    private static final String LOGIN = "login";
+    private static final String LOGIN = "splashLogin";
     private static final String SIGN_IN = "sign_in";
 
 

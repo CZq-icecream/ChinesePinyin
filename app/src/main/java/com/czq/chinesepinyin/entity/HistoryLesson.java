@@ -16,9 +16,20 @@ import java.util.List;
 public class HistoryLesson {
 
     /**
-     * 主键，代表课程id
+     * 主键
      */
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "id")
+    private Integer id;
+
+    /**
+     * 用户uuid
+     */
+    @ColumnInfo(name = "uuid")
+    private String uuid;
+    /**
+     * 代表课程id
+     */
     @ColumnInfo(name = "lesson_id")
     private Integer lessonId;
     /**
@@ -31,7 +42,8 @@ public class HistoryLesson {
     }
 
     @Ignore
-    public HistoryLesson(Integer lessonId, Integer progress) {
+    public HistoryLesson(String uuid, Integer lessonId, Integer progress) {
+        this.uuid = uuid;
         this.lessonId = lessonId;
         this.progress = progress;
     }
@@ -39,9 +51,26 @@ public class HistoryLesson {
     @Override
     public String toString() {
         return "HistoryLesson{" +
-                "lessonId=" + lessonId +
+                "uuid='" + uuid + '\'' +
+                ", lessonId=" + lessonId +
                 ", progress=" + progress +
                 '}';
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
     }
 
     public Integer getLessonId() {

@@ -16,6 +16,8 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
  */
 public class MainActivity extends AppCompatActivity {
 
+    private static final String TAG = "MainActivity";
+
     private BottomNavigationView mBottomNavigationView;
 
     @Override
@@ -26,12 +28,11 @@ public class MainActivity extends AppCompatActivity {
         mBottomNavigationView = findViewById(R.id.nav_bottom);
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupWithNavController(mBottomNavigationView, navController);
-
-
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        Log.d(TAG, "onResume");
     }
 }

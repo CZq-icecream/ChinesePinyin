@@ -1,5 +1,6 @@
 package com.czq.chinesepinyin.entity;
 
+import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.Ignore;
@@ -20,6 +21,7 @@ public class User {
      */
     @PrimaryKey
     @ColumnInfo(name = "id")
+    @NonNull
     private String uuid;
     /**
      * 用户名
@@ -41,7 +43,6 @@ public class User {
      */
     @ColumnInfo(name = "daily_goal", defaultValue = "15")
     private Integer dailyGoal;
-
     /**
      * 今日获得xp
      */
@@ -57,6 +58,11 @@ public class User {
      */
     @ColumnInfo(name = "current_lesson_id", defaultValue = "1")
     private Integer currentLessonId;
+    /**
+     * 用户当前学习的课程进度
+     */
+    @ColumnInfo(name = "current_lesson_progress", defaultValue = "1")
+    private Integer currentLessonProgress;
     /**
      * 用户头像路径
      */
@@ -74,11 +80,14 @@ public class User {
                 ", gainToday=" + gainToday +
                 ", totalXP=" + totalXP +
                 ", currentLessonId=" + currentLessonId +
+                ", currentLessonProgress=" + currentLessonProgress +
                 ", profilePath='" + profilePath + '\'' +
                 '}';
     }
 
-    public User(String uuid, String username, String password, Integer learningDays, Integer dailyGoal, Integer gainToday, Integer totalXP, Integer currentLessonId, String profilePath) {
+    public User(@NonNull String uuid, String username, String password, Integer learningDays,
+                Integer dailyGoal, Integer gainToday, Integer totalXP, Integer currentLessonId,
+                Integer currentLessonProgress, String profilePath) {
         this.uuid = uuid;
         this.username = username;
         this.password = password;
@@ -87,6 +96,7 @@ public class User {
         this.gainToday = gainToday;
         this.totalXP = totalXP;
         this.currentLessonId = currentLessonId;
+        this.currentLessonProgress = currentLessonProgress;
         this.profilePath = profilePath;
     }
 
@@ -152,6 +162,14 @@ public class User {
 
     public void setCurrentLessonId(Integer currentLessonId) {
         this.currentLessonId = currentLessonId;
+    }
+
+    public Integer getCurrentLessonProgress() {
+        return currentLessonProgress;
+    }
+
+    public void setCurrentLessonProgress(Integer currentLessonProgress) {
+        this.currentLessonProgress = currentLessonProgress;
     }
 
     public String getProfilePath() {

@@ -10,6 +10,8 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.czq.chinesepinyin.entity.Detail;
 import com.czq.chinesepinyin.repository.DetailRepository;
+import com.czq.chinesepinyin.util.Cache;
+import com.czq.chinesepinyin.util.Constant;
 
 /**
  * @date 2020.2.27
@@ -20,14 +22,23 @@ public class DetailViewModel extends AndroidViewModel {
     private static final String TAG = "DetailViewModel";
 
     private DetailRepository detailRepository;
+    private Cache cache;
 
     public DetailViewModel(@NonNull Application application) {
         super(application);
         detailRepository = new DetailRepository();
+        cache = Cache.getInstance(application.getApplicationContext());
     }
 
 
     public LiveData<Detail> getDetailLiveData(){
-        return detailRepository.getDetail(1, 1);
+        int lessonId = (int) cache.get(Constant.getCurrentLessonId());
+        int progress = (int) cache.get(Constant.getCurrentLessonProgress());
+        return detailRepository.getDetail(lessonId, progress);
+    }
+
+    public void updateProgress() {
+        int progress = (int) cache.get(Constant.getCurrentLessonProgress());
+        cache.put(Constant.getCurrentLessonProgress(), progress + 1);
     }
 }

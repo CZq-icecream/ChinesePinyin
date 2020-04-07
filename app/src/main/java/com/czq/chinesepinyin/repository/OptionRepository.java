@@ -48,7 +48,7 @@ public class OptionRepository {
      */
     public LiveData<Option> getOption(Integer lessonId, Integer progress){
         MutableLiveData<Option> optionMutableLiveData = new MutableLiveData<>();
-        Call<ResponseBody> task = optionService.getOption(1, 1);
+        Call<ResponseBody> task = optionService.getOption(lessonId, progress);
         task.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {

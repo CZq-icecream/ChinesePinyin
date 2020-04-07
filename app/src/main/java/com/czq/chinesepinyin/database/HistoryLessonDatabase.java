@@ -35,7 +35,6 @@ public abstract class HistoryLessonDatabase extends RoomDatabase {
                 if (historyLessonDatabase == null) {
                     historyLessonDatabase = Room.databaseBuilder(context.getApplicationContext(),
                             HistoryLessonDatabase.class, "history_lesson_database")
-                            .addCallback(callback)
                             .build();
                 }
             }
@@ -53,8 +52,6 @@ public abstract class HistoryLessonDatabase extends RoomDatabase {
                 public void run() {
                     HistoryLessonDao historyLessonDao = historyLessonDatabase.historyLessonDao();
                     historyLessonDao.deleteAll();
-                    HistoryLesson historyLesson = new HistoryLesson(1, 0);
-                    historyLessonDao.insertHistoryLesson(historyLesson);
                 }
             });
         }
