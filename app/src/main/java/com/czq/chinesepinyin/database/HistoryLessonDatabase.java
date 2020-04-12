@@ -9,7 +9,7 @@ import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import com.czq.chinesepinyin.dao.HistoryLessonDao;
-import com.czq.chinesepinyin.entity.HistoryLesson;
+import com.czq.chinesepinyin.entity.Lesson;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -18,7 +18,7 @@ import java.util.concurrent.Executors;
  * @date 2020.2.28
  * @author czq
  */
-@Database(entities = {HistoryLesson.class}, version = 1, exportSchema = false)
+@Database(entities = {Lesson.class}, version = 1, exportSchema = false)
 public abstract class HistoryLessonDatabase extends RoomDatabase {
 
     private static final String TAG = "HistoryLessonDatabase";

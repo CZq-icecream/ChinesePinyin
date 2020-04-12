@@ -1,14 +1,11 @@
 package com.czq.chinesepinyin.dao;
 
-import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
-import com.czq.chinesepinyin.entity.HistoryLesson;
-
-import java.util.jar.Attributes;
+import com.czq.chinesepinyin.entity.Lesson;
 
 /**
  * @date 2020.2.28
@@ -23,16 +20,16 @@ public interface HistoryLessonDao {
 //     * @return
 //     */
 //    @Query("SELECT * FROM history_lesson WHERE lesson_id = :lessonId")
-//    HistoryLesson selectHistoryLesson(Integer lessonId);
+//    Lesson selectHistoryLesson(Integer lessonId);
 
     /**
      * 删除该表的记录
      */
-    @Query("DELETE FROM history_lesson")
+    @Query("DELETE FROM Lesson")
     void deleteAll();
 
     @Insert(onConflict = OnConflictStrategy.ABORT)
-    void insert(HistoryLesson historyLesson);
+    void insert(Lesson lesson);
 
 
 //    /**
@@ -40,7 +37,7 @@ public interface HistoryLessonDao {
 //     * @param historyLesson
 //     */
 //    @Insert(onConflict = OnConflictStrategy.ABORT)
-//    void insertHistoryLesson(HistoryLesson historyLesson);
+//    void insertHistoryLesson(Lesson historyLesson);
 //
 //    /**
 //     * 更新用户学习进度

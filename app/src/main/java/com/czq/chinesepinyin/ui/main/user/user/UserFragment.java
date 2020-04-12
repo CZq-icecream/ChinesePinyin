@@ -1,10 +1,12 @@
 package com.czq.chinesepinyin.ui.main.user.user;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -13,10 +15,10 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
-import com.bumptech.glide.Glide;
 import com.czq.chinesepinyin.R;
 import com.czq.chinesepinyin.entity.User;
-import com.czq.chinesepinyin.util.AuthenticationState;
+import com.czq.chinesepinyin.ui.setting.dailygoal.DailyGoalSettingActivity;
+import com.czq.chinesepinyin.ui.setting.reminder.ReminderSettingActivity;
 
 /**
  * 位于主页的UserFragment
@@ -32,6 +34,11 @@ public class UserFragment extends Fragment {
     private ImageView userProfileImageView;
     private TextView userLearningDaysTextView;
     private TextView userTotalXP;
+    private LinearLayout userDailyGoalSetting;
+    private LinearLayout userLessonSetting;
+    private LinearLayout userReminderSetting;
+    private LinearLayout userHistoryLessonSetting;
+    private LinearLayout userPasswordSetting;
 
     @Nullable
     @Override
@@ -54,6 +61,48 @@ public class UserFragment extends Fragment {
         userProfileImageView = view.findViewById(R.id.user_profile);
         userLearningDaysTextView = view.findViewById(R.id.user_learning_days);
         userTotalXP = view.findViewById(R.id.user_total_xp);
+
+        userDailyGoalSetting = view.findViewById(R.id.daily_goal_setting);
+        userDailyGoalSetting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), DailyGoalSettingActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        userLessonSetting = view.findViewById(R.id.lesson_setting);
+        userLessonSetting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        userReminderSetting = view.findViewById(R.id.reminder_setting);
+        userReminderSetting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), ReminderSettingActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        userHistoryLessonSetting = view.findViewById(R.id.history_lesson);
+        userHistoryLessonSetting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        userPasswordSetting = view.findViewById(R.id.password_change);
+        userPasswordSetting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
     }
 
     private void subscribe(){

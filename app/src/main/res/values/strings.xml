@@ -52,4 +52,23 @@
     <string name="profile_fragment_login">LOGIN</string>
     <string name="profile_fragment_sign_in">SIGN IN</string>
 
+    <!-- DailyGoalSettingActivity界面的字符串 -->
+    <string name="daily_goal_setting_edit_goal">Edit goal</string>
+    <string name="daily_goal_setting_save">Save</string>
+    <string name="daily_goal_setting_casual">Casual\u0020\u0020\u0020\u002010 XP a day</string>
+    <string name="daily_goal_setting_regular">Regular\u0020\u0020\u002020 XP a day</string>
+    <string name="daily_goal_setting_serious">Serious\u0020\u0020\u002030 XP a day</string>
+    <string name="daily_goal_setting_insane">Insane\u0020\u0020\u0020\u002050 XP a day</string>
+
+    <!-- PasswordSettingActivity界面的字符串 -->
+    <string name="password_setting_password">Password</string>
+    <string name="password_setting_old_password">Old password</string>
+    <string name="password_setting_new_password">New password</string>
+    <string name="password_setting_confirm">Confirm password</string>
+    <string name="password_setting_submit">Submit</string>
+
+    <!-- ReminderSettingActivity界面的字符串 -->
+    <string name="reminder_setting_submit">Submit</string>
+    <string name="reminder_setting_cancel">Cancel</string>
+
 </resources>

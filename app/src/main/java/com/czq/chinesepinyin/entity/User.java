@@ -5,6 +5,9 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
+import androidx.room.TypeConverters;
+
+import com.czq.chinesepinyin.util.Converters;
 
 import java.util.List;
 
@@ -41,8 +44,9 @@ public class User {
     /**
      * 每日目标xp
      */
-    @ColumnInfo(name = "daily_goal", defaultValue = "15")
-    private Integer dailyGoal;
+    @ColumnInfo(name = "daily_goal")
+    @TypeConverters(Converters.class)
+    private DailyGoal dailyGoal;
     /**
      * 今日获得xp
      */
@@ -85,9 +89,7 @@ public class User {
                 '}';
     }
 
-    public User(@NonNull String uuid, String username, String password, Integer learningDays,
-                Integer dailyGoal, Integer gainToday, Integer totalXP, Integer currentLessonId,
-                Integer currentLessonProgress, String profilePath) {
+    public User(@NonNull String uuid, String username, String password, Integer learningDays, DailyGoal dailyGoal, Integer gainToday, Integer totalXP, Integer currentLessonId, Integer currentLessonProgress, String profilePath) {
         this.uuid = uuid;
         this.username = username;
         this.password = password;
@@ -132,11 +134,11 @@ public class User {
         this.learningDays = learningDays;
     }
 
-    public Integer getDailyGoal() {
+    public DailyGoal getDailyGoal() {
         return dailyGoal;
     }
 
-    public void setDailyGoal(Integer dailyGoal) {
+    public void setDailyGoal(DailyGoal dailyGoal) {
         this.dailyGoal = dailyGoal;
     }
 

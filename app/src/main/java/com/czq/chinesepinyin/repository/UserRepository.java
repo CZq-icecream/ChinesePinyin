@@ -6,11 +6,9 @@ import android.util.Log;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.czq.chinesepinyin.dao.HistoryLessonDao;
 import com.czq.chinesepinyin.dao.UserDao;
-import com.czq.chinesepinyin.database.HistoryLessonDatabase;
 import com.czq.chinesepinyin.database.UserDatabase;
-import com.czq.chinesepinyin.entity.HistoryLesson;
+import com.czq.chinesepinyin.entity.Lesson;
 import com.czq.chinesepinyin.entity.User;
 import com.czq.chinesepinyin.util.AuthenticationState;
 import com.czq.chinesepinyin.util.Cache;
@@ -206,7 +204,7 @@ public class UserRepository {
                         try {
                             String jsonString = responseBody.string();
                             Log.d(TAG, jsonString);
-                            List<HistoryLesson> list = JsonToObject.JsonToHistoryLesson(jsonString);
+                            List<Lesson> list = JsonToObject.JsonToHistoryLesson(jsonString);
                             Log.d(TAG, list.toString());
                             //保存历史课程
                             saveHistoryLesson(list);
@@ -247,13 +245,13 @@ public class UserRepository {
      * 开启新的线程，保存用户历史学习记录
      * @param list
      */
-    private void saveHistoryLesson(List<HistoryLesson> list) {
+    private void saveHistoryLesson(List<Lesson> list) {
         UserDatabase.databaseWriteExecutor.execute(new Runnable() {
             @Override
             public void run() {
                 //删除历史课程记录
 //                historyLessonDao.deleteAll();
-//                for (HistoryLesson historyLesson : list) {
+//                for (Lesson historyLesson : list) {
 //                    //插入最新课程记录
 //                    historyLessonDao.insert(historyLesson);
 //                }

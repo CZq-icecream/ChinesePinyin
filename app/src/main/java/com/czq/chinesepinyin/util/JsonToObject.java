@@ -1,7 +1,8 @@
 package com.czq.chinesepinyin.util;
 
+import com.czq.chinesepinyin.entity.DailyGoal;
 import com.czq.chinesepinyin.entity.Detail;
-import com.czq.chinesepinyin.entity.HistoryLesson;
+import com.czq.chinesepinyin.entity.Lesson;
 import com.czq.chinesepinyin.entity.Option;
 import com.czq.chinesepinyin.entity.User;
 
@@ -69,14 +70,14 @@ public class JsonToObject {
             String username = jsonObject.getString("username");
             String password = jsonObject.getString("password");
             Integer learningDays = jsonObject.getInt("learningDays");
-            Integer dailyGoal = jsonObject.getInt("dailyGoal");
+            String dailyGoal = jsonObject.getString("dailyGoal");
             Integer gainToday = jsonObject.getInt("gainToday");
             Integer totalXP = jsonObject.getInt("totalXP");
             Integer currentLessonId = jsonObject.getInt("currentLessonId");
             Integer currentLessonProgress = jsonObject.getInt("currentLessonProgress");
             String profilePath = jsonObject.getString("profilePath");
             user = new User(uuid, username, password, learningDays,
-                    dailyGoal, gainToday, totalXP, currentLessonId,
+                    DailyGoal.valueOf(dailyGoal), gainToday, totalXP, currentLessonId,
                     currentLessonProgress, profilePath);
         } catch (JSONException e) {
             e.printStackTrace();
@@ -84,8 +85,8 @@ public class JsonToObject {
         return user;
     }
 
-    public static List<HistoryLesson> JsonToHistoryLesson(String jsonString) {
-        List<HistoryLesson> list = new ArrayList<>();
+    public static List<Lesson> JsonToHistoryLesson(String jsonString) {
+        List<Lesson> list = new ArrayList<>();
         try {
             JSONArray jsonArray = new JSONArray(jsonString);
             for (int i = 0; i < jsonArray.length(); i++) {
@@ -93,7 +94,7 @@ public class JsonToObject {
                 String uuid = jsonObject.getString("uuid");
                 Integer lessonId = jsonObject.getInt("lessonId");
                 Integer progress = jsonObject.getInt("progress");
-                list.add(new HistoryLesson(uuid, lessonId, progress));
+                list.add(new Lesson(uuid, lessonId, progress));
             }
         } catch (JSONException e) {
             e.printStackTrace();

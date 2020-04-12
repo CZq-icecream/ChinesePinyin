@@ -1,5 +1,6 @@
 package com.czq.chinesepinyin.util;
 
+import com.czq.chinesepinyin.entity.DailyGoal;
 import com.czq.chinesepinyin.entity.User;
 
 /**
@@ -48,7 +49,7 @@ public class Constant {
      * 未登录用户的临时账号
      */
     private static final User user = new User("", "", "", 0,
-            0, 0, 0, 1, 1,"");
+            DailyGoal.Casual, 0, 0, 1, 1,"");
 
     public static String getBaseUrl(){
         return BASE_URL;

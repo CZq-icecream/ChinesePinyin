@@ -1,25 +1,16 @@
 package com.czq.chinesepinyin.ui.study;
 
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
-import android.graphics.Point;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.MediaController;
-import android.widget.VideoView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -27,18 +18,11 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.bumptech.glide.Glide;
 import com.czq.chinesepinyin.R;
-import com.czq.chinesepinyin.dao.HistoryLessonDao;
-import com.czq.chinesepinyin.dao.UserDao;
-import com.czq.chinesepinyin.database.HistoryLessonDatabase;
-import com.czq.chinesepinyin.database.UserDatabase;
 import com.czq.chinesepinyin.entity.Detail;
-import com.czq.chinesepinyin.entity.HistoryLesson;
-import com.czq.chinesepinyin.entity.User;
 import com.google.android.exoplayer2.ExoPlayerFactory;
 import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.android.exoplayer2.source.MediaSource;

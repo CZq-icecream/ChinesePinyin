@@ -96,8 +96,8 @@ public class LearningFragment extends Fragment {
             public void onChanged(User user) {
                 if (user != null) {
                     learningDay.setText(getResources().getString(R.string.learning_fragment_learning_day, user.getLearningDays()));
-                    textProgress.setText(getResources().getString(R.string.learning_fragment_progress, user.getGainToday(), user.getDailyGoal()));
-                    progressBar.setMax(user.getDailyGoal());
+                    textProgress.setText(getResources().getString(R.string.learning_fragment_progress, user.getGainToday(), user.getDailyGoal().getXP()));
+                    progressBar.setMax(user.getDailyGoal().getXP());
                     progressBar.setProgress(user.getGainToday());
                 }
             }
